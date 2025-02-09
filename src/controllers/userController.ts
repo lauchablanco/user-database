@@ -22,8 +22,9 @@ const UserController = {
   createUser: async (req: Req, res: Res) => {
     const { name, surname, profilePicture, house } = req.body;
     if (!name|| !surname || !profilePicture || !house) {
-        return res.status(400).json({ error: 'All fields are mandatory' });
-      }
+        res.status(400).json({ error: 'All fields are mandatory' });
+        return;
+    }
     try {
       const newUser = new User({ name, surname, profilePicture, house });
       await newUser.save();
