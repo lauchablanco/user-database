@@ -1,10 +1,17 @@
 import mongoose, { Schema, Document } from "mongoose";
 
+export enum House {
+    Gryffindor = 'Gryffindor',
+    Slytherin = 'Slytherin',
+    Hufflepuff = 'Hufflepuff',
+    Ravenclaw = 'Ravenclaw',
+  }
+
 interface IUser extends Document {
   name: string;
   surname: string;
   profilePicture: string;
-  house: "Gryffindor" | "Slytherin" | "Hufflepuff" | "Ravenclaw";
+  house: House
 }
 
 const UserSchema: Schema = new Schema({
@@ -13,7 +20,7 @@ const UserSchema: Schema = new Schema({
   profilePicture: { type: String },
   house: {
     type: String,
-    enum: ["Gryffindor", "Slytherin", "Hufflepuff", "Ravenclaw"],
+    enum: Object.values(House),
     required: true,
   },
 });
