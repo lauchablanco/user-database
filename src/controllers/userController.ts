@@ -33,6 +33,21 @@ const UserController = {
       res.status(500).json({ messsage: error });
     }
   },
+  deleteUser: async (req: Req, res: Res) => {
+    const { id } = req.params;
+    try {
+        const deletedUser = await User.findByIdAndDelete(id);
+
+        if (!deletedUser) {
+          res.status(404).json({ error: 'User not found' });
+          return;
+        }
+    
+        res.status(200).json({ message: 'User has been eliminated', user: deletedUser });
+    } catch (error) {
+      res.status(500).json({ messsage: error });
+    }
+  },
 };
 
 export default UserController;
