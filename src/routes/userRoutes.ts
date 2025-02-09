@@ -4,9 +4,9 @@ import UserController from "../controllers/userController";
 const router = express.Router();
 
 //CRUD routes
-router.post("/", UserController.createUser);
-router.get("/", UserController.getAllUsers);
-router.get("/:id", UserController.getUserById);
+router.post("/users", UserController.createUser);
+router.get("/users", UserController.getAllUsers);
+router.get("/users/:id", UserController.getUserById);
 //router.put("/:id", UserController.updateUser);
 //router.delete("/:id", UserController.deleteUser);
 
