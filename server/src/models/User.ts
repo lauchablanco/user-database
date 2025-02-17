@@ -1,18 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { User, House } from "common-types"; // Importamos los tipos del nuevo paquete
 
-export enum House {
-    Gryffindor = 'Gryffindor',
-    Slytherin = 'Slytherin',
-    Hufflepuff = 'Hufflepuff',
-    Ravenclaw = 'Ravenclaw',
-  }
-
-interface IUser extends Document {
-  name: string;
-  surname: string;
-  profilePicture: string;
-  house: House
-}
+interface IUserDocument extends User, Document {} // Extendemos IUser para usarlo con Mongoose
 
 const UserSchema: Schema = new Schema({
   name: { type: String, required: true },
@@ -25,4 +14,4 @@ const UserSchema: Schema = new Schema({
   },
 });
 
-export default mongoose.model<IUser>("User", UserSchema);
+export default mongoose.model<IUserDocument>("User", UserSchema);
