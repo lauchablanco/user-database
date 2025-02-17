@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "ES6",                       // o la versión de JavaScript que prefieras
+    "module": "CommonJS",                   // o "ESNext" si prefieres módulos ES
+    "outDir": "./dist",                     // la carpeta de salida donde se generarán los archivos .js
+    "rootDir": "./src",                     // la carpeta de entrada donde están los archivos .ts
+    "declaration": true,                    // genera archivos .d.ts
+    "declarationMap": true,                 // opcional: genera mapas de declaración de tipos
+    "strict": true,                         // opción recomendada para un código más seguro
+    "esModuleInterop": true,                // ayuda con la interoperabilidad entre módulos
+    "skipLibCheck": true,                   // (opcional) mejora la velocidad de la compilación
+    "forceConsistentCasingInFileNames": true // ayuda a evitar problemas con el sistema de archivos
+  },
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}
