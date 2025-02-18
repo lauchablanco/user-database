@@ -6,7 +6,7 @@ interface UserPillProps {
 }
 
 const UserPill : React.FC<UserPillProps> = ({user}) => {
-    return <div className={'userPill'}>{user.name + " " + user.surname}</div>
+    return <div className={'userPill'} id={user._id}>{user.name + " " + user.surname}</div>
 }
 
 export default UserPill;
