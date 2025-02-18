@@ -6,6 +6,7 @@ export enum House {
   }
   
   export type User = {
+    _id: string;
     name: string;
     surname: string;
     profilePicture?: string;
