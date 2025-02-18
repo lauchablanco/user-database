@@ -1,8 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 import { User, House } from "common-types"; // Importamos los tipos del nuevo paquete
 
-interface IUserDocument extends User, Document {} // Extendemos IUser para usarlo con Mongoose
-
 const UserSchema: Schema = new Schema({
   name: { type: String, required: true },
   surname: { type: String, required: true },
@@ -14,4 +12,4 @@ const UserSchema: Schema = new Schema({
   },
 });
 
-export default mongoose.model<IUserDocument>("User", UserSchema);
+export default mongoose.model<User>("User", UserSchema);
