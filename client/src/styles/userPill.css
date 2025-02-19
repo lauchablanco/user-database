@@ -1,3 +1,60 @@
-.userPill {
-    border: solid;
-  }
+/* Contenedor principal de la pill */
+.user-pill {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 3px 15px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 10px 0;
+  font-family: Arial, sans-serif;
+}
+
+/* Imagen de perfil */
+.profile-pic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Info del usuario */
+.user-info {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.user-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.user-email {
+  font-size: 12px;
+  color: gray;
+}
+
+/* Casa de Hogwarts */
+.user-house {
+  font-size: 14px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 5px;
+}
+
+/* Colores pastel para cada casa */
+.gryffindor {
+  background-color: #ffdddd;
+}
+
+.slytherin {
+  background-color: #ddffdd;
+}
+
+.hufflepuff {
+  background-color: #fff4cc;
+}
+
+.ravenclaw {
+  background-color: #dde5ff;
+}
