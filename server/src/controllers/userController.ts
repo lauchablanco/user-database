@@ -35,10 +35,10 @@ const UserController = {
   },
   updateUser: async (req: Req, res: Res) => {
     const { id } = req.params;
-    const { name, surname, profilePicture, house } = req.body;
+    const updatedData  = req.body;
     try {
   
-      const updatedUser = await User.findByIdAndUpdate(id, { name, surname, profilePicture, house }, {
+      const updatedUser = await User.findByIdAndUpdate(id, updatedData , {
         new: true,
         runValidators: true,
       });
