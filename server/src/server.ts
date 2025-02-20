@@ -1,7 +1,7 @@
 import express, {Request, Response} from "express"
 import mongoose from 'mongoose';
 import userRoutes from "./routes/userRoutes";
-const mongoURI = "mongodb+srv://laucha:razer1337@user-database.ar27t.mongodb.net/user_database?retryWrites=true&w=majority&appName=user-database";
+const mongoURI = "mongodb+srv://readonly_user:readonly_user123@user-database.ar27t.mongodb.net/user_database?retryWrites=true&w=majority&appName=user-database";
 
 mongoose.connect(mongoURI)
   .then(() => console.log('Conectado a MongoDB Atlas'))
