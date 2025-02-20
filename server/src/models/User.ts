@@ -1,13 +1,25 @@
-import mongoose, { Schema, Document } from "mongoose";
-import { User, House } from "common-types"; // Importamos los tipos del nuevo paquete
+import mongoose, { Schema } from "mongoose";
+import { User, House, Role, Pet } from "common-types"; // Importamos los tipos del nuevo paquete
 
 const UserSchema: Schema = new Schema({
-  name: { type: String, required: true },
-  surname: { type: String, required: true },
+  _id: { type: String, required: true },
+  fullName: { type: String, required: true },
+  email: { type: String, required: true },
+  birthDate: { type: Date, required: true },
   profilePicture: { type: String },
   house: {
     type: String,
     enum: Object.values(House),
+    required: true,
+  },
+  role: {
+    type: String,
+    enum: Object.values(Role),
+    required: true,
+  },
+  pet: {
+    type: String,
+    enum: Object.values(Pet),
     required: true,
   },
 });
