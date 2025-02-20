@@ -30,6 +30,7 @@ export enum House {
   export type User = {
     _id: string;
     fullName: string;
+    email: string;
     birthDate: Date;
     profilePicture?: string;
     house: House;
