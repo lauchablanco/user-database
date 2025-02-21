@@ -7,12 +7,12 @@ const UserPill: React.FC<{ user: User }> = ({ user }) => {
   return (
     <div className={`user-pill ${user.house.toLowerCase()}`}>
       {/* Foto de perfil */}
-      <img src={defaultProfilePic} alt={user.name} className="profile-pic" />
+      <img src={defaultProfilePic} alt={user.fullName + ' profile picture.'} className="profile-pic" />
 
       {/* Info de usuario */}
       <div className="user-info">
-        <p className="user-name">{user.name} {user.surname}</p>
-        <p className="user-email">{user.surname}</p>
+        <p className="user-name">{user.fullName}</p>
+        <p className="user-email">{user.email}</p>
       </div>
 
       {/* Casa de Hogwarts */}
