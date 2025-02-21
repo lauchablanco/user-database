@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import User from "../models/User";
+import { mockData } from "./mock-data";
 
 dotenv.config();
 
@@ -15,27 +16,8 @@ const seedDatabase = async () => {
     await mongoose.connect(MONGO_URI);
     console.log("✅ Connected to MongoDB");
 
-    // Datos de ejemplo
-    const users = [
-      {
-        fullName: "Harry Potter",
-        email: "harry.potter@hogwarts.com",
-        birthDate: new Date("1980-07-31"),
-        house: "Gryffindor",
-        role: "Student",
-        gender: "Male",
-        pet: "Owl"
-      },
-      {
-        fullName: "Severus Snape",
-        email: "severus.snape@hogwarts.com",
-        birthDate: new Date("1960-01-09"),
-        house: "Slytherin",
-        role: "Professor",
-        gender: "Male",
-        pet: "Cat"
-      },
-    ];
+    // Example data, generated with ChatGPT
+    const users = mockData;
 
     // Insertar en la base de datos
     await User.insertMany(users);
