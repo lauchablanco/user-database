@@ -2,7 +2,6 @@ import mongoose, { Schema } from "mongoose";
 import { User, House, Role, Pet } from "common-types"; // Importamos los tipos del nuevo paquete
 
 const UserSchema: Schema = new Schema({
-  _id: { type: String, required: true },
   fullName: { type: String, required: true },
   email: { type: String, required: true },
   birthDate: { type: Date, required: true },
