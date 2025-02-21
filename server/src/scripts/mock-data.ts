@@ -3,7 +3,7 @@ export const mockData = [
       "fullName": "Harry Potter",
       "email": "harry.potter@hogwarts.edu",
       "birthDate": "1980-07-31",
-      "profilePicture": "https://example.com/images/harry.jpg",
+      "profilePicture": "harry.jpg",
       "house": "Gryffindor",
       "role": "Student",
       "pet": "Owl"
@@ -12,7 +12,7 @@ export const mockData = [
       "fullName": "Hermione Granger",
       "email": "hermione.granger@hogwarts.edu",
       "birthDate": "1979-09-19",
-      "profilePicture": "https://example.com/images/hermione.jpg",
+      "profilePicture": "hermione.jpg",
       "house": "Gryffindor",
       "role": "Student",
       "pet": "Cat"
@@ -21,7 +21,7 @@ export const mockData = [
       "fullName": "Ron Weasley",
       "email": "ron.weasley@hogwarts.edu",
       "birthDate": "1980-03-01",
-      "profilePicture": "https://example.com/images/ron.jpg",
+      "profilePicture": "ron.jpg",
       "house": "Gryffindor",
       "role": "Student",
       "pet": "Rat"
@@ -30,7 +30,7 @@ export const mockData = [
       "fullName": "Albus Dumbledore",
       "email": "albus.dumbledore@hogwarts.edu",
       "birthDate": "1881-08-30",
-      "profilePicture": "https://example.com/images/dumbledore.jpg",
+      "profilePicture": "dumbledore.jpg",
       "house": "Gryffindor",
       "role": "Headmaster",
       "pet": "Ferret"
@@ -39,7 +39,7 @@ export const mockData = [
       "fullName": "Severus Snape",
       "email": "severus.snape@hogwarts.edu",
       "birthDate": "1960-01-09",
-      "profilePicture": "https://example.com/images/snape.jpg",
+      "profilePicture": "snape.jpg",
       "house": "Slytherin",
       "role": "Professor",
       "pet": "Frog"
@@ -48,7 +48,7 @@ export const mockData = [
       "fullName": "Draco Malfoy",
       "email": "draco.malfoy@hogwarts.edu",
       "birthDate": "1980-06-05",
-      "profilePicture": "https://example.com/images/draco.jpg",
+      "profilePicture": "draco.jpg",
       "house": "Slytherin",
       "role": "Student",
       "pet": "Owl"
@@ -57,7 +57,7 @@ export const mockData = [
       "fullName": "Luna Lovegood",
       "email": "luna.lovegood@hogwarts.edu",
       "birthDate": "1981-02-13",
-      "profilePicture": "https://example.com/images/luna.jpg",
+      "profilePicture": undefined,
       "house": "Ravenclaw",
       "role": "Student",
       "pet": "Ferret"
@@ -66,7 +66,7 @@ export const mockData = [
       "fullName": "Minerva McGonagall",
       "email": "minerva.mcgonagall@hogwarts.edu",
       "birthDate": "1935-10-04",
-      "profilePicture": "https://example.com/images/mcgonagall.jpg",
+      "profilePicture": "mcgonagall.jpg",
       "house": "Gryffindor",
       "role": "Professor",
       "pet": "Cat"
@@ -75,7 +75,7 @@ export const mockData = [
       "fullName": "Cedric Diggory",
       "email": "cedric.diggory@hogwarts.edu",
       "birthDate": "1977-09-01",
-      "profilePicture": "https://example.com/images/cedric.jpg",
+      "profilePicture": "cedric.jpg",
       "house": "Hufflepuff",
       "role": "Student",
       "pet": "Frog"
