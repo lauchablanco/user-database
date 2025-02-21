@@ -12,9 +12,9 @@
 
 /* Imagen de perfil */
 .profile-pic {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  border-radius: 80%;
   object-fit: cover;
 }
 
@@ -36,10 +36,8 @@
 
 /* Casa de Hogwarts */
 .user-house {
-  font-size: 14px;
-  font-weight: bold;
-  padding: 5px 10px;
-  border-radius: 5px;
+  width: 70px;
+  height: 70px;
 }
 
 /* Colores pastel para cada casa */
