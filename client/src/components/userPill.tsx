@@ -3,11 +3,11 @@ import "../styles/userPill.css"; // Importamos los estilos
 import { User } from "common-types";
 
 const UserPill: React.FC<{ user: User }> = ({ user }) => {
-    const defaultProfilePic = "../../public/default-profile-man.jpg"; // Imagen local en public/images
+    const profilePicture = user.profilePicture ? user.profilePicture : "../../public/default-profile-man.jpg"; // Imagen local en public/images
   return (
     <div className={`user-pill ${user.house.toLowerCase()}`}>
       {/* Foto de perfil */}
-      <img src={defaultProfilePic} alt={user.fullName + ' profile picture.'} className="profile-pic" />
+      <img src={profilePicture} alt={user.fullName + ' profile picture.'} className="profile-pic" />
 
       {/* Info de usuario */}
       <div className="user-info">
@@ -16,7 +16,7 @@ const UserPill: React.FC<{ user: User }> = ({ user }) => {
       </div>
 
       {/* Casa de Hogwarts */}
-      <span className="user-house">{user.house}</span>
+      <img src={`../../public/${user.house}.png`} alt={user.house} className="user-house" />
     </div>
   );
 };
