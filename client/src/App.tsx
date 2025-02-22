@@ -2,7 +2,7 @@
 //import reactLogo from './assets/react.svg'
 //import viteLogo from '/vite.svg'
 import './styles/App.css'
-import UserList from './components/userList'
+import UserList from './components/UserList'
 
 function App() {
   //const [count, setCount] = useState(0)
