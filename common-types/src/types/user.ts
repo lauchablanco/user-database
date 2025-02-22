@@ -16,7 +16,6 @@ export enum House {
   export enum Gender {
     Male = "Male",
     Female = "Female",
-    Other = "Other",
   }
 
   export enum Pet {
@@ -36,4 +35,5 @@ export enum House {
     house: House;
     role: Role;
     pet: Pet;
+    gender: Gender;
   };
