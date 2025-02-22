@@ -2,10 +2,15 @@ import React from "react";
 import "../styles/userPill.css"; // Importamos los estilos
 import { User } from "common-types";
 
-const UserPill: React.FC<{ user: User }> = ({ user }) => {
-    const profilePicture = user.profilePicture ? user.profilePicture : "../../public/default-profile-man.jpg"; // Imagen local en public/images
+interface UserPillProps {
+  user: User;
+  onClick: () => void;
+}
+
+const UserPill: React.FC<UserPillProps> = ({ user, onClick }) => {
+  const profilePicture = user.profilePicture || `../../public/default-profile-${user.gender.toLowerCase()}.jpg`; // Imagen local en public/images
   return (
-    <div className={`user-pill ${user.house.toLowerCase()}`}>
+    <div className={`user-pill ${user.house.toLowerCase()}`} onClick={onClick}>
       {/* Foto de perfil */}
       <img src={profilePicture} alt={user.fullName + ' profile picture.'} className="profile-pic" />
 
