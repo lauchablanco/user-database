@@ -3,14 +3,14 @@ import { resolveErrorMessage } from "../utils/errorsUtils";
 import { User } from "common-types";
 
 type UseFetchUsersResult = {
-    users: User[];
+    fetchedUsers: User[];
     loading: boolean;
     error: string | null;
     refetch: () => Promise<void>;
 };
 
 export const useFetchUsers = () : UseFetchUsersResult => {
-    const [users, setUsers] = useState<User[]>([]);
+    const [fetchedUsers, setUsers] = useState<User[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -38,5 +38,5 @@ export const useFetchUsers = () : UseFetchUsersResult => {
         fetchUsers();
     }, []);
 
-    return { users, loading, error, refetch: fetchUsers };
+    return { fetchedUsers, loading, error, refetch: fetchUsers };
 }
