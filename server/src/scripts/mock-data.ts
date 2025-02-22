@@ -6,7 +6,8 @@ export const mockData = [
       "profilePicture": "harry.jpg",
       "house": "Gryffindor",
       "role": "Student",
-      "pet": "Owl"
+      "pet": "Owl",
+      "gender": "Male"
     },
     {
       "fullName": "Hermione Granger",
@@ -15,7 +16,8 @@ export const mockData = [
       "profilePicture": "hermione.jpg",
       "house": "Gryffindor",
       "role": "Student",
-      "pet": "Cat"
+      "pet": "Cat",
+      "gender": "Female"
     },
     {
       "fullName": "Ron Weasley",
@@ -24,7 +26,8 @@ export const mockData = [
       "profilePicture": "ron.jpg",
       "house": "Gryffindor",
       "role": "Student",
-      "pet": "Rat"
+      "pet": "Rat",
+      "gender": "Male"
     },
     {
       "fullName": "Albus Dumbledore",
@@ -33,7 +36,8 @@ export const mockData = [
       "profilePicture": "dumbledore.jpg",
       "house": "Gryffindor",
       "role": "Headmaster",
-      "pet": "Ferret"
+      "pet": "Ferret",
+      "gender": "Male"
     },
     {
       "fullName": "Severus Snape",
@@ -42,7 +46,8 @@ export const mockData = [
       "profilePicture": "snape.jpg",
       "house": "Slytherin",
       "role": "Professor",
-      "pet": "Frog"
+      "pet": "Frog",
+      "gender": "Male"
     },
     {
       "fullName": "Draco Malfoy",
@@ -51,7 +56,8 @@ export const mockData = [
       "profilePicture": "draco.jpg",
       "house": "Slytherin",
       "role": "Student",
-      "pet": "Owl"
+      "pet": "Owl",
+      "gender": "Male"
     },
     {
       "fullName": "Luna Lovegood",
@@ -60,7 +66,8 @@ export const mockData = [
       "profilePicture": undefined,
       "house": "Ravenclaw",
       "role": "Student",
-      "pet": "Ferret"
+      "pet": "Ferret",
+      "gender": "Female"
     },
     {
       "fullName": "Minerva McGonagall",
@@ -69,7 +76,8 @@ export const mockData = [
       "profilePicture": "mcgonagall.jpg",
       "house": "Gryffindor",
       "role": "Professor",
-      "pet": "Cat"
+      "pet": "Cat",
+      "gender": "Female"
     },
     {
       "fullName": "Cedric Diggory",
@@ -78,6 +86,7 @@ export const mockData = [
       "profilePicture": "cedric.jpg",
       "house": "Hufflepuff",
       "role": "Student",
-      "pet": "Frog"
+      "pet": "Frog",
+      "gender": "Male"
     }
   ]
