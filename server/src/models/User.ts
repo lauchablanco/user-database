@@ -1,5 +1,5 @@
 import mongoose, { Schema } from "mongoose";
-import { User, House, Role, Pet } from "common-types"; // Importamos los tipos del nuevo paquete
+import { User, House, Role, Pet, Gender } from "common-types"; // Importamos los tipos del nuevo paquete
 
 const UserSchema: Schema = new Schema({
   fullName: { type: String, required: true },
@@ -19,6 +19,11 @@ const UserSchema: Schema = new Schema({
   pet: {
     type: String,
     enum: Object.values(Pet),
+    required: true,
+  },
+  gender: {
+    type: String,
+    enum: Object.values(Gender),
     required: true,
   },
 });
