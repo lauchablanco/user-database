@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "ES6",                       // o la versión de JavaScript que prefieras
-    "module": "CommonJS",                   // o "ESNext" si prefieres módulos ES
+    "module": "ESNext",                   // o "ESNext" si prefieres módulos ES
     "outDir": "./dist",                     // la carpeta de salida donde se generarán los archivos .js
     "rootDir": "./src",                     // la carpeta de entrada donde están los archivos .ts
     "declaration": true,                    // genera archivos .d.ts
