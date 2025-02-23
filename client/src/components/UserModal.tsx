@@ -1,5 +1,5 @@
 import { User } from 'common-types';
-import React, { act } from 'react';
+import React from 'react';
 import "../styles/userModal.css";
 import { dateFormatter } from '../utils/dateUtils';
 
