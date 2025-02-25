@@ -4,11 +4,6 @@
     gap: 1rem;
 }
 
-.user-list-header {
-    display: flex;
-    justify-content: flex-start;
-}
-
 .user-list-filter {
     display: flex;
     justify-content: flex-start;

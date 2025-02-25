@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useFetchUsers } from '../hooks/useFetchUsers';
 import UserPill from './UserPill';
 import UserModal from './UserModal';
-import { User } from 'common-types';
+import { Gender, User } from 'common-types';
 import UserFilter from './Filter';
 import { FilterOption } from '../types/filterOption';
 import { filterEnums, generateOptions } from '../utils/enumUtils';
 import "../styles/UserList.css"
+import { sortOptions, sortStudents } from '../utils/sortUtils';
+import Sorter from './Sorter';
 
 const UserList: React.FC = () => {
 
@@ -14,6 +16,7 @@ const UserList: React.FC = () => {
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [filteredUsers, setFilteredUsers] = useState<User[] | null>(fetchedUsers);
     const [nameFilter, setNameFilter] = useState<string>('');
+    const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
 
     const filtersEntries = Object.entries(filterEnums);
     const filtersKeys = Object.keys(filterEnums);
@@ -61,18 +64,16 @@ const UserList: React.FC = () => {
             });
         }, result); // Inicializamos `reduce` con el array original de usuarios.
 
+        result = sortStudents(result, selectedSort);
         setFilteredUsers(result);
-    }, [nameFilter, filtersState, fetchedUsers]);  // on filters change
+    }, [nameFilter, filtersState, fetchedUsers, selectedSort]);  // on filters change
 
     return (
         <div className="user-list-container">
-            <h2>Users List</h2>
-            <div className="user-list-header">
-                <button onClick={refetch}>Get Data</button>
-            </div>
+                <h2>Users List</h2>
             <div className="user-list-filter">
                 <div className="filters-container">
-                <input placeholder='Filter by Name' value={nameFilter} onChange={(e) => handleFilterNameChange(e)}></input>
+                    <input placeholder='Filter by Name' value={nameFilter} onChange={(e) => handleFilterNameChange(e)}></input>
                     {filtersEntries.map(([name, enumType]) => (
                         <UserFilter
                             key={name}
@@ -81,9 +82,11 @@ const UserList: React.FC = () => {
                             onSelectedOptionChange={values => handleFilterChange(name, values)}
                         />
                     ))}
+                    <Sorter selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
+                    <button onClick={refetch}>Get Data</button>
+
                 </div>
             </div>
-
             {loading && <p>Loading users...</p>}
             {error && <div>
                 <p>Error: {error}</p>
