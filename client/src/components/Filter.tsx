@@ -18,7 +18,6 @@ const UserFilter: React.FC<UserFilterProps> = ({ options, filterName, onSelected
     };
 
     return <div>
-        <label>{filterName}</label>
         <Select
             id="filterName"
             options={options}
