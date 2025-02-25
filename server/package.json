@@ -1,16 +1,13 @@
 {
   "name": "user-database",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/server.mjs",
+  "type": "module",
   "scripts": {
-    "start": "nodemon --watch src --ext ts --exec ts-node src/server.ts",
+    "start": "node ./dist/server.mjs",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc"
+    "build": "tsc && ts2mjs dist"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^22.12.0",
@@ -21,5 +18,8 @@
     "nodemon": "^3.1.9",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
+  },
+  "devDependencies": {
+    "ts2mjs": "^3.0.0"
   }
 }

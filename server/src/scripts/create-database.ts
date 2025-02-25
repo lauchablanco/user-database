@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import dotenv from "dotenv";
-import User from "../models/User";
-import { mockData } from "./mock-data";
+import User from "../models/User.js";
+import { mockData } from "./mock-data.js";
 
 dotenv.config();
 

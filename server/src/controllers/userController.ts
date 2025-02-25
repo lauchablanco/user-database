@@ -1,4 +1,4 @@
-import User from "../models/User";
+import User from "../models/User.js";
 import { Response as Res, Request as Req } from "express";
 
 const UserController = {
