@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "start": "node ./dist/server.mjs",
+    "db": "node ./dist/scripts/drop-database.mjs && node ./dist/scripts/create-database.mjs",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc && ts2mjs dist"
   },
