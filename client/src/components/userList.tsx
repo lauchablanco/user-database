@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useFetchUsers } from '../hooks/useFetchUsers';
 import UserPill from './UserPill';
 import UserModal from './UserModal';
-import { User, House } from 'common-types';
+import { User, House, Gender } from 'common-types';
 import UserFilter from './Filter';
 import { FilterOption } from '../types/filterOption';
 
@@ -13,6 +13,7 @@ const UserList: React.FC = () => {
     const [filteredUsers, setFilteredUsers] = useState<User[] | null>(fetchedUsers);
     const [nameFilter, setNameFilter] = useState<string>('');
     const [houseFilter, setHouseFilter] = useState<House[]>([]);
+    const [genderFilter, setGenderFilter] = useState<Gender[]>([]);
 
     const handleFilterNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const nameFilter = e.target.value;
@@ -26,6 +27,11 @@ const UserList: React.FC = () => {
     const handleSelectedHouseChange = (selectedHouses: FilterOption[]) => {
         const selectedHousesFilter = selectedHouses.map(sh => sh.label as House);
         setHouseFilter(selectedHousesFilter);
+    }
+
+    const handleSelectedGenderChange = (selectedGenders: FilterOption[]) => {
+        const selectedGenderFilter = selectedGenders.map(sg => sg.label as Gender);
+        setGenderFilter(selectedGenderFilter);
     }
 
     useEffect(() => { setFilteredUsers(fetchedUsers) }, []);
@@ -45,8 +51,12 @@ const UserList: React.FC = () => {
             result = result.filter((user) => houseFilter.includes(user.house));
         }
 
+        if (genderFilter.length > 0) {
+            result = result.filter((user) => genderFilter.includes(user.gender));
+        }
+
         setFilteredUsers(result);
-    }, [nameFilter, houseFilter, fetchedUsers]);  // on filters change
+    }, [nameFilter, houseFilter, genderFilter, fetchedUsers]);  // on filters change
 
 
     return (
@@ -58,7 +68,9 @@ const UserList: React.FC = () => {
             <div className="user-list-filter">
                 <input placeholder='Filter by Name' value={nameFilter} onChange={(e) => handleFilterNameChange(e)}></input>
                 <UserFilter filterName='House' options={Object.values(House).map(house => { return { value: house.toLowerCase(), label: house } })} onSelectedOptionChange={handleSelectedHouseChange}></UserFilter>
+                <UserFilter filterName='Gender' options={Object.values(Gender).map(gender => { return { value: gender.toLowerCase(), label: gender } })} onSelectedOptionChange={handleSelectedGenderChange}></UserFilter>
             </div>
+            
             {loading && <p>Loading users...</p>}
             {error && <p>Error: {error}</p>}
 
