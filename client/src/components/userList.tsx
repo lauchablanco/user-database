@@ -57,7 +57,7 @@ const UserList: React.FC = () => {
             </div>
             <div className="user-list-filter">
                 <input placeholder='Filter by Name' value={nameFilter} onChange={(e) => handleFilterNameChange(e)}></input>
-                <UserFilter filterName='house' options={Object.values(House).map(house => { return { value: house.toLowerCase(), label: house } })} onSelectedOptionChange={handleSelectedHouseChange}></UserFilter>
+                <UserFilter filterName='House' options={Object.values(House).map(house => { return { value: house.toLowerCase(), label: house } })} onSelectedOptionChange={handleSelectedHouseChange}></UserFilter>
             </div>
             {loading && <p>Loading users...</p>}
             {error && <p>Error: {error}</p>}
