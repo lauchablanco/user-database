@@ -5,6 +5,7 @@ import UserModal from './UserModal';
 import { User, House, Gender } from 'common-types';
 import UserFilter from './Filter';
 import { FilterOption } from '../types/filterOption';
+import { genderOptions, houseOptions } from '../utils/enumUtils';
 
 const UserList: React.FC = () => {
 
@@ -58,7 +59,6 @@ const UserList: React.FC = () => {
         setFilteredUsers(result);
     }, [nameFilter, houseFilter, genderFilter, fetchedUsers]);  // on filters change
 
-
     return (
         <div className="user-list-container">
             <h2>Users List</h2>
@@ -67,8 +67,8 @@ const UserList: React.FC = () => {
             </div>
             <div className="user-list-filter">
                 <input placeholder='Filter by Name' value={nameFilter} onChange={(e) => handleFilterNameChange(e)}></input>
-                <UserFilter filterName='House' options={Object.values(House).map(house => { return { value: house.toLowerCase(), label: house } })} onSelectedOptionChange={handleSelectedHouseChange}></UserFilter>
-                <UserFilter filterName='Gender' options={Object.values(Gender).map(gender => { return { value: gender.toLowerCase(), label: gender } })} onSelectedOptionChange={handleSelectedGenderChange}></UserFilter>
+                <UserFilter filterName='House' options={houseOptions} onSelectedOptionChange={handleSelectedHouseChange}></UserFilter>
+                <UserFilter filterName='Gender' options={genderOptions} onSelectedOptionChange={handleSelectedGenderChange}></UserFilter>
             </div>
             
             {loading && <p>Loading users...</p>}
