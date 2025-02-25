@@ -19,7 +19,7 @@ const UserFilter: React.FC<UserFilterProps> = ({ options, filterName, onSelected
 
     return <div>
         <Select
-            id="filterName"
+            id={filterName}
             options={options}
             value={selectedOptions}
             isMulti
