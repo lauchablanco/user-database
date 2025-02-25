@@ -1,21 +1,18 @@
 import { Gender, House, Pet, Role } from "common-types";
+import { FilterOption } from "../types/filterOption";
 
 // generating options from different enums
-export function generateOptions<T extends Record<string, string | number>>(enumType: T): { value: string, label: string }[] {
+// ex: generateOptions(gender) = ['Male', 'Female']
+export function generateOptions<T extends Record<string, string | number>>(enumType: T): FilterOption[] {
     return Object.values(enumType).map(option => ({
-        value: option.toString().toLowerCase(),
         label: option.toString(),
+        value: option.toString().toLowerCase(),
     }));
 }
 
-// House enum options
-export const houseOptions = generateOptions(House);
-
-// Gender enum options
-export const genderOptions = generateOptions(Gender);
-
-// Pet enum options
-export const petOptions = generateOptions(Pet);
-
-// Role enum options
-export const roleOptions = generateOptions(Role);
+export const filterEnums = {
+    Gender,
+    House,
+    Pet,
+    Role
+}

@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useFetchUsers } from '../hooks/useFetchUsers';
 import UserPill from './UserPill';
 import UserModal from './UserModal';
-import { User, House, Gender, Role, Pet } from 'common-types';
+import { User } from 'common-types';
 import UserFilter from './Filter';
 import { FilterOption } from '../types/filterOption';
-import { genderOptions, houseOptions, petOptions, roleOptions } from '../utils/enumUtils';
+import { filterEnums, generateOptions } from '../utils/enumUtils';
 
 const UserList: React.FC = () => {
 
@@ -13,10 +13,13 @@ const UserList: React.FC = () => {
     const [selectedUser, setSelectedUser] = useState<User | null>(null);
     const [filteredUsers, setFilteredUsers] = useState<User[] | null>(fetchedUsers);
     const [nameFilter, setNameFilter] = useState<string>('');
-    const [houseFilter, setHouseFilter] = useState<House[]>([]);
-    const [genderFilter, setGenderFilter] = useState<Gender[]>([]);
-    const [roleFilter, setRoleFilter] = useState<Role[]>([]);
-    const [petFilter, setPetFilter] = useState<Pet[]>([]);
+
+    const filtersEntries = Object.entries(filterEnums);
+    const filtersKeys = Object.keys(filterEnums);
+
+    const [filtersState, setFiltersState] = useState<Record<string, string[]>>(
+        filtersKeys.reduce((acc, key) => ({ ...acc, [key]: [] }), {})
+    );
 
     const handleFilterNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const nameFilter = e.target.value;
@@ -27,25 +30,12 @@ const UserList: React.FC = () => {
         setSelectedUser(user);
     };
 
-    const handleSelectedHouseChange = (selectedHouses: FilterOption[]) => {
-        const selectedHousesFilter = selectedHouses.map(sh => sh.label as House);
-        setHouseFilter(selectedHousesFilter);
-    }
-
-    const handleSelectedGenderChange = (selectedGenders: FilterOption[]) => {
-        const selectedGenderFilter = selectedGenders.map(sg => sg.label as Gender);
-        setGenderFilter(selectedGenderFilter);
-    }
-
-    const handleSelectedRoleChange = (selectedRoles: FilterOption[]) => {
-        const selectedRoleFilter = selectedRoles.map(sg => sg.label as Role);
-        setRoleFilter(selectedRoleFilter);
-    }
-
-    const handleSelectedPetChange = (selectedPets: FilterOption[]) => {
-        const selectedPetFilter = selectedPets.map(sg => sg.label as Pet);
-        setPetFilter(selectedPetFilter);
-    }
+    const handleFilterChange = (filterName: string, val: FilterOption[]) => {
+        setFiltersState(prev => ({
+            ...prev,
+            [filterName]: val.map(v => v.label) // Asegura siempre un array
+        }));
+    };
 
     useEffect(() => { setFilteredUsers(fetchedUsers) }, []);
 
@@ -59,34 +49,19 @@ const UserList: React.FC = () => {
             );
         }
 
-        // house filter
-        if (houseFilter.length > 0) {
-            result = result.filter((user) => houseFilter.includes(user.house));
-        }
+        result = filtersKeys.reduce((filteredUsers, filterKey) => {
+            const filterValues = filtersState[filterKey]; //obtengo filtros seleccionados
 
-        if (genderFilter.length > 0) {
-            result = result.filter((user) => genderFilter.includes(user.gender));
-        }
+            if (filterValues.length === 0) return filteredUsers; // Si no hay filtros activos, no hacemos nada.
 
-        if (petFilter.length > 0) {
-            result = result.filter((user) => petFilter.includes(user.pet));
-        }
-
-
-        if (roleFilter.length > 0) {
-            result = result.filter((user) => roleFilter.includes(user.role));
-        }
-
+            return filteredUsers.filter((user) => {
+                const userValue = user[filterKey.toLowerCase() as keyof User] as string; //obtengo los valores del usuario de esa key
+                return filterValues.includes(userValue); //devuelvo si el valor del usuario está incluído en el filtro
+            });
+        }, result); // Inicializamos `reduce` con el array original de usuarios.
 
         setFilteredUsers(result);
-    }, [nameFilter, houseFilter, genderFilter, petFilter, roleFilter, fetchedUsers]);  // on filters change
-
-    const filters = [
-        { name: 'House', options: houseOptions, onChange: handleSelectedHouseChange },
-        { name: 'Gender', options: genderOptions, onChange: handleSelectedGenderChange },
-        { name: 'Role', options: roleOptions, onChange: handleSelectedRoleChange },
-        { name: 'Pet', options: petOptions, onChange: handleSelectedPetChange }
-    ];
+    }, [nameFilter, filtersState, fetchedUsers]);  // on filters change
 
     return (
         <div className="user-list-container">
@@ -96,9 +71,14 @@ const UserList: React.FC = () => {
             </div>
             <div className="user-list-filter">
                 <input placeholder='Filter by Name' value={nameFilter} onChange={(e) => handleFilterNameChange(e)}></input>
-                {filters.map(filter =>
-                    <UserFilter filterName={filter.name} options={filter.options} onSelectedOptionChange={filter.onChange}></UserFilter>
-                )}
+                {filtersEntries.map(([name, enumType]) => (
+                    <UserFilter
+                        key={name}
+                        filterName={name}
+                        options={generateOptions(enumType)}
+                        onSelectedOptionChange={values => handleFilterChange(name, values)}
+                    />
+                ))}
             </div>
 
             {loading && <p>Loading users...</p>}
