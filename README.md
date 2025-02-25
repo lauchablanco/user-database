@@ -68,6 +68,18 @@ cd ..
 
 ---
 
+## Environment Variables
+
+Before running the project, create a `.env` file in the root directory and add the following variable:
+
+```ini
+MONGO_URI_READONLY=mongodb+srv://readonly_user:readonly_user123@user-database.ar27t.mongodb.net/user_database?retryWrites=true&w=majority&appName=user-database
+```
+
+Make sure the .env file is not committed to the repository by adding it to your .gitignore file.
+
+---
+
 ## Running the Project
 
 ### 1. Start the Server
