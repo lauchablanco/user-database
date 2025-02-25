@@ -2,10 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useFetchUsers } from '../hooks/useFetchUsers';
 import UserPill from './UserPill';
 import UserModal from './UserModal';
-import { User, House, Gender } from 'common-types';
+import { User, House, Gender, Role, Pet } from 'common-types';
 import UserFilter from './Filter';
 import { FilterOption } from '../types/filterOption';
-import { genderOptions, houseOptions } from '../utils/enumUtils';
+import { genderOptions, houseOptions, petOptions, roleOptions } from '../utils/enumUtils';
 
 const UserList: React.FC = () => {
 
@@ -15,6 +15,8 @@ const UserList: React.FC = () => {
     const [nameFilter, setNameFilter] = useState<string>('');
     const [houseFilter, setHouseFilter] = useState<House[]>([]);
     const [genderFilter, setGenderFilter] = useState<Gender[]>([]);
+    const [roleFilter, setRoleFilter] = useState<Role[]>([]);
+    const [petFilter, setPetFilter] = useState<Pet[]>([]);
 
     const handleFilterNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const nameFilter = e.target.value;
@@ -33,6 +35,16 @@ const UserList: React.FC = () => {
     const handleSelectedGenderChange = (selectedGenders: FilterOption[]) => {
         const selectedGenderFilter = selectedGenders.map(sg => sg.label as Gender);
         setGenderFilter(selectedGenderFilter);
+    }
+
+    const handleSelectedRoleChange = (selectedRoles: FilterOption[]) => {
+        const selectedRoleFilter = selectedRoles.map(sg => sg.label as Role);
+        setRoleFilter(selectedRoleFilter);
+    }
+
+    const handleSelectedPetChange = (selectedPets: FilterOption[]) => {
+        const selectedPetFilter = selectedPets.map(sg => sg.label as Pet);
+        setPetFilter(selectedPetFilter);
     }
 
     useEffect(() => { setFilteredUsers(fetchedUsers) }, []);
@@ -56,8 +68,25 @@ const UserList: React.FC = () => {
             result = result.filter((user) => genderFilter.includes(user.gender));
         }
 
+        if (petFilter.length > 0) {
+            result = result.filter((user) => petFilter.includes(user.pet));
+        }
+
+
+        if (roleFilter.length > 0) {
+            result = result.filter((user) => roleFilter.includes(user.role));
+        }
+
+
         setFilteredUsers(result);
-    }, [nameFilter, houseFilter, genderFilter, fetchedUsers]);  // on filters change
+    }, [nameFilter, houseFilter, genderFilter, petFilter, roleFilter, fetchedUsers]);  // on filters change
+
+    const filters = [
+        { name: 'House', options: houseOptions, onChange: handleSelectedHouseChange },
+        { name: 'Gender', options: genderOptions, onChange: handleSelectedGenderChange },
+        { name: 'Role', options: roleOptions, onChange: handleSelectedRoleChange },
+        { name: 'Pet', options: petOptions, onChange: handleSelectedPetChange }
+    ];
 
     return (
         <div className="user-list-container">
@@ -67,10 +96,11 @@ const UserList: React.FC = () => {
             </div>
             <div className="user-list-filter">
                 <input placeholder='Filter by Name' value={nameFilter} onChange={(e) => handleFilterNameChange(e)}></input>
-                <UserFilter filterName='House' options={houseOptions} onSelectedOptionChange={handleSelectedHouseChange}></UserFilter>
-                <UserFilter filterName='Gender' options={genderOptions} onSelectedOptionChange={handleSelectedGenderChange}></UserFilter>
+                {filters.map(filter =>
+                    <UserFilter filterName={filter.name} options={filter.options} onSelectedOptionChange={filter.onChange}></UserFilter>
+                )}
             </div>
-            
+
             {loading && <p>Loading users...</p>}
             {error && <p>Error: {error}</p>}
 
