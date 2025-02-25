@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useFetchUsers } from '../hooks/useFetchUsers';
 import UserPill from './UserPill';
 import UserModal from './UserModal';
-import { Gender, User } from 'common-types';
+import { User } from 'common-types';
 import UserFilter from './Filter';
 import { FilterOption } from '../types/filterOption';
 import { filterEnums, generateOptions } from '../utils/enumUtils';
