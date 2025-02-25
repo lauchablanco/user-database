@@ -6,6 +6,7 @@ import { User } from 'common-types';
 import UserFilter from './Filter';
 import { FilterOption } from '../types/filterOption';
 import { filterEnums, generateOptions } from '../utils/enumUtils';
+import "../styles/UserList.css"
 
 const UserList: React.FC = () => {
 
@@ -67,23 +68,28 @@ const UserList: React.FC = () => {
         <div className="user-list-container">
             <h2>Users List</h2>
             <div className="user-list-header">
-                <button onClick={refetch}>Reload</button>
+                <button onClick={refetch}>Get Data</button>
             </div>
             <div className="user-list-filter">
+                <div className="filters-container">
                 <input placeholder='Filter by Name' value={nameFilter} onChange={(e) => handleFilterNameChange(e)}></input>
-                {filtersEntries.map(([name, enumType]) => (
-                    <UserFilter
-                        key={name}
-                        filterName={name}
-                        options={generateOptions(enumType)}
-                        onSelectedOptionChange={values => handleFilterChange(name, values)}
-                    />
-                ))}
+                    {filtersEntries.map(([name, enumType]) => (
+                        <UserFilter
+                            key={name}
+                            filterName={name}
+                            options={generateOptions(enumType)}
+                            onSelectedOptionChange={values => handleFilterChange(name, values)}
+                        />
+                    ))}
+                </div>
             </div>
 
             {loading && <p>Loading users...</p>}
-            {error && <p>Error: {error}</p>}
-
+            {error && <div>
+                <p>Error: {error}</p>
+                <button onClick={refetch}>Reload</button>
+            </div>
+            }
             {!loading && !error && filteredUsers && (
                 <ul>
                     {filteredUsers.map((user: User) => (

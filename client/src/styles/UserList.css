@@ -21,3 +21,9 @@
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
+.filters-container {
+    display: flex;
+    gap: 10px; /* Espacio entre filtros */
+    flex-wrap: wrap; /* Para que se acomoden si no entran en una sola línea */
+  }
