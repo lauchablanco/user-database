@@ -53,7 +53,7 @@ export const mockData = [
     "fullName": "Severus Snape",
     "email": "severus.snape@hogwarts.edu",
     "birthDate": "1960-01-09",
-    "profilePicture": "snape.jpg",
+    "profilePicture": undefined,
     "house": "Slytherin",
     "role": "Professor",
     "pet": "Frog",
