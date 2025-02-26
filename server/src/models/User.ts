@@ -5,7 +5,7 @@ const UserSchema: Schema = new Schema({
   fullName: { type: String, required: true },
   email: { type: String, required: true },
   birthDate: { type: Date, required: true },
-  profilePicture: { type: String },
+  profilePicture: { type: String, required: false },
   house: {
     type: String,
     enum: Object.values(House),

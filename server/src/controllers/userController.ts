@@ -20,13 +20,13 @@ const UserController = {
     }
   },
   createUser: async (req: Req, res: Res) => {
-    const { name, surname, profilePicture, house } = req.body;
-    if (!name|| !surname || !profilePicture || !house) {
+    const { fullName, email, profilePicture, birthDate, house, pet, role, gender } = req.body;
+    if (!fullName|| !email || !profilePicture || !house || !pet || !role || !gender) {
         res.status(400).json({ error: 'All fields are mandatory' });
         return;
     }
     try {
-      const newUser = new User({ name, surname, profilePicture, house });
+      const newUser = new User({ fullName, email, profilePicture, birthDate, house, pet, role, gender });
       await newUser.save();
       res.status(201).json({message:'User has been created correctly', user: newUser});
     } catch (error) {

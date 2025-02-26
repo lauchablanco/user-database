@@ -2,6 +2,7 @@ import dotenv from 'dotenv';
 import express, {Request, Response} from "express"
 import mongoose from 'mongoose';
 import userRoutes from "./routes/userRoutes.js";
+import apiKeyMiddleware from "./middlewares/auth.js";
 
 dotenv.config();
 const MONGO_URI = process.env.MONGO_URI_READONLY;
