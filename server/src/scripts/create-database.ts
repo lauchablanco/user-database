@@ -8,7 +8,7 @@ dotenv.config();
 const MONGO_URI = process.env.MONGO_URI_ADMIN;
 
 if (!MONGO_URI) {
-  throw new Error("❌ MONGO_URI is not defined in .env file");
+  throw new Error("❌ MONGO_URI_ADMIN is not defined in .env file");
 }
 
 const seedDatabase = async () => {

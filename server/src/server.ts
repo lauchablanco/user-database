@@ -2,19 +2,18 @@ import dotenv from 'dotenv';
 import express, {Request, Response} from "express"
 import mongoose from 'mongoose';
 import userRoutes from "./routes/userRoutes.js";
-import apiKeyMiddleware from "./middlewares/auth.js";
 
 dotenv.config();
 const MONGO_URI = process.env.MONGO_URI_READONLY;
 
 if (!MONGO_URI) {
-  throw new Error("❌ MONGO_URI is not defined in .env file");
+  throw new Error("❌ MONGO_URI_READONLY is not defined in .env file");
 }
 
 
 mongoose.connect(MONGO_URI)
-  .then(() => console.log('✅ Conectado a MongoDB Atlas'))
-  .catch(err => console.error('❌ Error al conectar a MongoDB:', err));
+  .then(() => console.log('✅ Connected to MongoDB Atlas'))
+  .catch(err => console.error('❌ Error trying to connect to MongoDB:', err));
 
 const app = express();
 const port = 5000;

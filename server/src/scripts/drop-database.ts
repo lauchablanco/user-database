@@ -8,7 +8,7 @@ dotenv.config();
 const MONGO_URI = process.env.MONGO_URI_ADMIN;
 
 if (!MONGO_URI) {
-  console.error('Mongo URI not provided in .env file');
+  console.error('MONGO_URI_ADMIN not provided in .env file');
   process.exit(1);
 }
 
