@@ -2,12 +2,12 @@ import { Gender, User } from "common-types";
 import { FilterOption } from "../types/filterOption";
 
 export const sortOptions: FilterOption[] = [
-    { value: "fullName-asc", label: "🔠 Nombre (A-Z)" },
-    { value: "fullName-desc", label: "🔡 Nombre (Z-A)" },
-    { value: "house-asc", label: "🏰 Casa (A-Z)" },
-    { value: "house-desc", label: "🏰 Casa (Z-A)" },
-    { value: "gender-male", label: "♂️ Género (Masculino → Femenino)" },
-    { value: "gender-female", label: "♀️ Género (Femenino → Masculino)" },
+    { value: "fullName-asc", label: "🔠 Name (A-Z)" },
+    { value: "fullName-desc", label: "🔡 Name (Z-A)" },
+    { value: "house-asc", label: "🏰 House (A-Z)" },
+    { value: "house-desc", label: "🏰 House (Z-A)" },
+    { value: "gender-male", label: "♂️ Gender (Male → Female)" },
+    { value: "gender-female", label: "♀️ Gender (Female → Male)" },
   ];
 
 export const sortStudents = (students: User[], sortOption: FilterOption) => {
