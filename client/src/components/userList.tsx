@@ -10,6 +10,7 @@ import "../styles/UserList.css"
 import { sortOptions, sortStudents } from '../utils/sortUtils';
 import Sorter from './Sorter';
 import { useAuth } from '../context/AuthContext';
+import { RoleSelector } from './RoleSelector';
 
 const UserList: React.FC = () => {
 
@@ -75,6 +76,7 @@ const UserList: React.FC = () => {
             <div>
                 <h2>Users List</h2>
                 <h3>Logged in as {role}</h3>
+                <RoleSelector></RoleSelector>
             </div>
             <div className="user-list-filter">
                 <div className="filters-container">
