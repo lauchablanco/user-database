@@ -11,6 +11,8 @@ import { sortOptions, sortStudents } from '../utils/sortUtils';
 import Sorter from './Sorter';
 import { useAuth } from '../context/AuthContext';
 import { RoleSelector } from './RoleSelector';
+import { permissionsRecord } from '../types/permissions';
+import FAB from './FAB';
 
 const UserList: React.FC = () => {
 
@@ -20,6 +22,8 @@ const UserList: React.FC = () => {
     const [nameFilter, setNameFilter] = useState<string>('');
     const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
     const { role } = useAuth();
+
+    const canCreate = permissionsRecord[role].includes("CREATE_USER");
 
     const filtersEntries = Object.entries(filterEnums);
     const filtersKeys = Object.keys(filterEnums);
@@ -108,6 +112,10 @@ const UserList: React.FC = () => {
                 </ul>
             )}
             {selectedUser && <UserModal user={selectedUser} onClose={() => setSelectedUser(null)} />}
+            {canCreate && <FAB
+                onClick={() => console.log("Open modal")}
+                disabled={!canCreate}
+            />}
         </div>
     );
 };

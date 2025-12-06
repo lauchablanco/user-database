@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/userPill.css"; // Importamos los estilos
+import "../styles/UserPill.css"; // Importamos los estilos
 import { User } from "common-types";
 
 interface UserPillProps {
