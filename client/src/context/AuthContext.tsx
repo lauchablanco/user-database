@@ -9,7 +9,7 @@ type AuthContextType = {
 const AuthContext = createContext<AuthContextType | null>(null);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [role, setRole] = useState<Role>(Role.Student); // por default
+  const [role, setRole] = useState<Role>(Role.STUDENT); // por default
 
   return (
     <AuthContext.Provider value={{ role, setRole }}>
