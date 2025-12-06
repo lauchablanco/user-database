@@ -8,9 +8,10 @@ export type Capacity =
 | "DELETE_USER";
 
 export const permissionsRecord: Record<Role, Permissions> = {
-    [Role.Student]: [],
-    [Role.Ghost]: [],
-    [Role.Prefect]: [],
-    [Role.Professor]: ["UPDATE_USER"],
-    [Role.Headmaster]: ["CREATE_USER", "UPDATE_USER", "DELETE_USER"],
+    [Role.STUDENT]: [],
+    [Role.GHOST]: [],
+    [Role.PREFECT]: [],
+    [Role.PROFESSOR]: ["UPDATE_USER"],
+    [Role.PRINCIPAL]: ["CREATE_USER", "UPDATE_USER", "DELETE_USER"],
+    [Role.ADMIN]: ["CREATE_USER", "UPDATE_USER", "DELETE_USER"],
 };
