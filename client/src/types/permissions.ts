@@ -1,4 +1,4 @@
-export type Role = "STUDENT" | "TEACHER" | "PRINCIPAL" | "ADMIN";
+import { Role } from "common-types";
 
 export type Permissions = Capacity[];
 
@@ -8,8 +8,9 @@ export type Capacity =
 | "DELETE_USER";
 
 export const permissionsRecord: Record<Role, Permissions> = {
-    STUDENT: [],
-    TEACHER: ["UPDATE_USER"],
-    PRINCIPAL: ["CREATE_USER", "UPDATE_USER", "DELETE_USER"],
-    ADMIN: ["CREATE_USER", "UPDATE_USER", "DELETE_USER"],
+    [Role.Student]: [],
+    [Role.Ghost]: [],
+    [Role.Prefect]: [],
+    [Role.Professor]: ["UPDATE_USER"],
+    [Role.Headmaster]: ["CREATE_USER", "UPDATE_USER", "DELETE_USER"],
 };
