@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useFetchUsers } from '../hooks/useFetchUsers';
-import UserPill from './userPill';
+import UserPill from './UserPill';
 import UserModal from './UserModal';
 import { User } from 'common-types';
 import UserFilter from './Filter';
