@@ -3,11 +3,14 @@
 //import viteLogo from '/vite.svg'
 import './styles/App.css'
 import UserList from './components/UserList'
+import { AuthProvider } from './context/AuthContext'
 
 function App() {
   return (
     <div className='bg-school'>
+      <AuthProvider>
       <UserList />
+      </AuthProvider>
     </div>
   )
 }
