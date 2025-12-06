@@ -6,11 +6,12 @@ export enum House {
   }
   
   export enum Role {
-    Student = "Student",
-    Professor = "Professor",
-    Headmaster = "Headmaster",
-    Prefect = "Prefect",
-    Ghost = "Ghost",
+    GHOST = "Ghost",
+    STUDENT = "Student",
+    PREFECT = "Prefect",
+    PROFESSOR = "Professor",
+    PRINCIPAL = "Headmaster",
+    ADMIN = "Admin",
   }
 
   export enum Gender {
