@@ -24,7 +24,7 @@ const UserFilter: React.FC<UserFilterProps> = ({ options, filterName, onSelected
             value={selectedOptions}
             isMulti
             onChange={handleChange}
-            placeholder={`Select ${filterName}`}
+            placeholder={`Filter by ${filterName}`}
         />
     </div>
 }
