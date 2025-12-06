@@ -23,7 +23,7 @@ const UserList: React.FC = () => {
     const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
     const { role } = useAuth();
 
-    const canCreate = permissionsRecord[role].includes("CREATE_USER");
+    const canCreate = role && permissionsRecord[role].includes("CREATE_USER");
 
     const filtersEntries = Object.entries(filterEnums);
     const filtersKeys = Object.keys(filterEnums);
