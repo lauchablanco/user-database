@@ -9,6 +9,7 @@ import { filterEnums, generateOptions } from '../utils/enumUtils';
 import "../styles/UserList.css"
 import { sortOptions, sortStudents } from '../utils/sortUtils';
 import Sorter from './Sorter';
+import { useAuth } from '../context/AuthContext';
 
 const UserList: React.FC = () => {
 
@@ -17,6 +18,7 @@ const UserList: React.FC = () => {
     const [filteredUsers, setFilteredUsers] = useState<User[] | null>(fetchedUsers);
     const [nameFilter, setNameFilter] = useState<string>('');
     const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
+    const { role } = useAuth();
 
     const filtersEntries = Object.entries(filterEnums);
     const filtersKeys = Object.keys(filterEnums);
@@ -70,7 +72,10 @@ const UserList: React.FC = () => {
 
     return (
         <div className="user-list-container">
+            <div>
                 <h2>Users List</h2>
+                <h3>Logged in as {role}</h3>
+            </div>
             <div className="user-list-filter">
                 <div className="filters-container">
                     <input placeholder='Filter by Name' value={nameFilter} onChange={(e) => handleFilterNameChange(e)}></input>
