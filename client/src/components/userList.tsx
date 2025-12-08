@@ -112,10 +112,10 @@ const UserList: React.FC = () => {
                 </ul>
             )}
             {selectedUser && <UserModal user={selectedUser} onClose={() => setSelectedUser(null)} />}
-            {canCreate && <FAB
+            <FAB
                 onClick={() => console.log("Open modal")}
                 disabled={!canCreate}
-            />}
+            />
         </div>
     );
 };
