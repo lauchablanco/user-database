@@ -1,7 +1,7 @@
-export const dateFormatter = (fecha: string | Date): string => {
-    return new Date(fecha).toLocaleDateString("es-AR", {
+export const dateFormatter = (date: string | Date | undefined): string => {
+    return date ? new Date(date).toLocaleDateString("es-AR", {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
-    });
+    }) : new Date().toDateString();
   };
