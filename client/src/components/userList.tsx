@@ -21,6 +21,7 @@ const UserList: React.FC = () => {
     const [filteredUsers, setFilteredUsers] = useState<User[] | null>(fetchedUsers);
     const [nameFilter, setNameFilter] = useState<string>('');
     const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
+    const [showUserModal, setShowUserModal] = useState(false);
     const { role } = useAuth();
 
     const canCreate = hasCapacity(role, "CREATE_USER");
@@ -39,6 +40,7 @@ const UserList: React.FC = () => {
 
     const handleUserClick = (user: User) => {
         setSelectedUser(user);
+        setShowUserModal(true);
     };
 
     const handleFilterChange = (filterName: string, val: FilterOption[]) => {
@@ -111,11 +113,11 @@ const UserList: React.FC = () => {
                     ))}
                 </ul>
             )}
-            {selectedUser && <UserModal readOnly={!canCreate} user={selectedUser} onClose={() => setSelectedUser(null)} />}
             <FAB
-                onClick={() => console.log("Open modal")}
+                onClick={() => { setSelectedUser(null); setShowUserModal(true) }}
                 disabled={!canCreate}
             />
+            {showUserModal && <UserModal readOnly={!canCreate} user={selectedUser} onClose={() => { setSelectedUser(null); setShowUserModal(false); }} />}
         </div>
     );
 };

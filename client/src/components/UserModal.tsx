@@ -9,12 +9,12 @@ import "react-datepicker/dist/react-datepicker.css";
 interface UserModalProps {
   user: User | null;      // null = create mode
   onClose: () => void;
-  readOnly?: boolean;      // después lo vas a manejar con permisos
+  readOnly?: boolean;
 }
 
 const UserModal: React.FC<UserModalProps> = ({ user, onClose, readOnly = false }) => {
 
-  // Si user existe → editar. Si no → crear usuario nuevo.
+  // if existing user → edit. If not → create.
   const [formData, setFormData] = useState<UserForm>(() =>
     user ?? {
       _id: "",
@@ -121,8 +121,7 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, readOnly = false }
           <EnumSelect enumObj={Gender} value={formData.gender!} onChange={handleGenderChange} isDisabled={readOnly} />
         </div>
 
-        {/* Save button solo si no está en readOnly */}
-
+        {/* Save button */}
         <button disabled={readOnly} className="save-button">
           {user ? "Save Changes" : "Create User"}
         </button>
