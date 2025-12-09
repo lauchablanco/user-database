@@ -1,17 +1,17 @@
-import Select from "react-select";
 import { useAuth } from "../context/AuthContext";
 import { Role } from "common-types";
+import { EnumSelect } from "./EnumSelect";
+import { generateEnumOptions } from "../utils/enumUtils";
 
 export function RoleSelector() {
   const { role, setRole } = useAuth();
-  const options = Object.values(Role).map((rol) => { return { value: rol, label: rol } });
+  const options = generateEnumOptions(Role);
   const selectedOption = options.find((opt) => opt.value === role);
+  const handleChange = (role: Role) => {
+    setRole(role);
+  };
+
   return (
-    <Select
-      options={options}
-      value={selectedOption}
-      onChange={(option) => option && setRole(option.value)}
-    >
-    </Select>
+   <EnumSelect enumObj={Role} onChange={handleChange} value={selectedOption!.value as Role}/>
   );
 }
