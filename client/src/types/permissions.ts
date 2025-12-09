@@ -1,4 +1,4 @@
-import { Role } from "common-types";
+import { Gender, House, Pet, Role, User } from "common-types";
 
 export type Permissions = Capacity[];
 
@@ -14,4 +14,12 @@ export const permissionsRecord: Record<Role, Permissions> = {
     [Role.PROFESSOR]: ["UPDATE_USER"],
     [Role.PRINCIPAL]: ["CREATE_USER", "UPDATE_USER", "DELETE_USER"],
     [Role.ADMIN]: ["CREATE_USER", "UPDATE_USER", "DELETE_USER"],
+};
+
+export type UserForm = Partial<User> & {
+  birthDate?: Date; // en forms casi siempre es string
+  house?: House;
+  role?: Role;
+  pet?: Pet;
+  gender?: Gender;
 };
