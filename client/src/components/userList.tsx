@@ -5,14 +5,14 @@ import UserModal from './UserModal';
 import { User } from 'common-types';
 import UserFilter from './Filter';
 import { FilterOption } from '../types/filterOption';
-import { filterEnums, generateOptions } from '../utils/enumUtils';
+import { filterEnums, generateEnumOptions } from '../utils/enumUtils';
 import "../styles/UserList.css"
 import { sortOptions, sortStudents } from '../utils/sortUtils';
 import Sorter from './Sorter';
 import { useAuth } from '../context/AuthContext';
 import { RoleSelector } from './RoleSelector';
-import { permissionsRecord } from '../types/permissions';
 import FAB from './FAB';
+import { hasCapacity } from '../utils/permission';
 
 const UserList: React.FC = () => {
 
@@ -23,7 +23,7 @@ const UserList: React.FC = () => {
     const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
     const { role } = useAuth();
 
-    const canCreate = role && permissionsRecord[role].includes("CREATE_USER");
+    const canCreate = hasCapacity(role, "CREATE_USER");
 
     const filtersEntries = Object.entries(filterEnums);
     const filtersKeys = Object.keys(filterEnums);
@@ -44,7 +44,7 @@ const UserList: React.FC = () => {
     const handleFilterChange = (filterName: string, val: FilterOption[]) => {
         setFiltersState(prev => ({
             ...prev,
-            [filterName]: val.map(v => v.label) // Asegura siempre un array
+            [filterName]: val.map(v => v.value) // Asegura siempre un array
         }));
     };
 
@@ -89,7 +89,7 @@ const UserList: React.FC = () => {
                         <UserFilter
                             key={name}
                             filterName={name}
-                            options={generateOptions(enumType)}
+                            options={generateEnumOptions(enumType)}
                             onSelectedOptionChange={values => handleFilterChange(name, values)}
                         />
                     ))}
@@ -111,7 +111,7 @@ const UserList: React.FC = () => {
                     ))}
                 </ul>
             )}
-            {selectedUser && <UserModal user={selectedUser} onClose={() => setSelectedUser(null)} />}
+            {selectedUser && <UserModal readOnly={!canCreate} user={selectedUser} onClose={() => setSelectedUser(null)} />}
             <FAB
                 onClick={() => console.log("Open modal")}
                 disabled={!canCreate}
