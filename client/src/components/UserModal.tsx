@@ -65,18 +65,18 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, readOnly = false }
         <img src={profilePicture} alt="Profile" className="profile-pic" />
 
         {/* Nombre */}
-        <p>
-          <label>Full Name</label>
+        <div className="form-row">
+          <label>Name</label>
           <input
             type="text"
             value={formData.fullName}
             onChange={handleChange("fullName")}
             readOnly={readOnly}
           />
-        </p>
+        </div>
 
         {/* Fecha nacimiento */}
-        <p>
+        <div className="form-row">
           <label>Birth Date</label>
           <DatePicker selected={formData.birthDate ? new Date(formData.birthDate) : null}
             onChange={(date) =>
@@ -84,10 +84,10 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, readOnly = false }
             }
             readOnly={readOnly}
           />
-        </p>
+        </div>
 
         {/* Email */}
-        <p>
+        <div className="form-row">
           <label>Email</label>
           <input
             type="email"
@@ -95,31 +95,31 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, readOnly = false }
             onChange={handleChange("email")}
             readOnly={readOnly}
           />
-        </p>
+        </div>
 
         {/* House */}
-        <p>
+        <div className="form-row">
           <label>House</label>
           <EnumSelect enumObj={House} value={formData.house!} onChange={handleHouseChange} isDisabled={readOnly} />
-        </p>
+        </div>
 
         {/* Role */}
-        <p>
+        <div className="form-row">
           <label>Role</label>
           <EnumSelect enumObj={Role} value={formData.role!} onChange={handleRoleChange} isDisabled={readOnly} />
-        </p>
+        </div>
 
         {/* Pet */}
-        <p>
+        <div className="form-row">
           <label>Pet</label>
           <EnumSelect enumObj={Pet} value={formData.pet!} onChange={handlePetChange} isDisabled={readOnly} />
-        </p>
+        </div>
 
         {/* Gender */}
-        <p>
+        <div className="form-row">
           <label>Gender</label>
           <EnumSelect enumObj={Gender} value={formData.gender!} onChange={handleGenderChange} isDisabled={readOnly} />
-        </p>
+        </div>
 
         {/* Save button solo si no está en readOnly */}
 
