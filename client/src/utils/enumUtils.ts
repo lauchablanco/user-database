@@ -3,10 +3,10 @@ import { FilterOption } from "../types/filterOption";
 
 // generating options from different enums
 // ex: generateOptions(gender) = ['Male', 'Female']
-export function generateOptions<T extends Record<string, string | number>>(enumType: T): FilterOption[] {
+export function generateEnumOptions<T extends Record<string, string | number>>(enumType: T): FilterOption[] {
     return Object.values(enumType).map(option => ({
         label: option.toString(),
-        value: option.toString().toLowerCase(),
+        value: option.toString(),
     }));
 }
 
