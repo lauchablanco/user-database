@@ -85,11 +85,16 @@ const UserList: React.FC = () => {
 
     return (
         <div className="user-list-container">
-            <div>
-                <h2>Users List</h2>
-                <h3>Logged in as {role}</h3>
-                <RoleSelector></RoleSelector>
+            <div className='header-bar'>
+                <div className="header-left">
+                    <img src="/hogwarts.png" alt="Hogwarts" className="hogwarts-logo" />
+                </div>
+                <div className='header-right'>
+                    <h3 className='title'>Logged in as</h3>
+                    <RoleSelector />
+                </div>
             </div>
+            <h2 className='title'>Users List</h2>
             <div className="user-list-filter">
                 <div className="filters-container">
                     <input placeholder='Filter by Name' value={nameFilter} onChange={(e) => handleFilterNameChange(e)}></input>
@@ -102,7 +107,7 @@ const UserList: React.FC = () => {
                         />
                     ))}
                     <Sorter selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
-                    <button onClick={refetch}>Get Data</button>
+                    <button onClick={refetch}>Refresh Data</button>
 
                 </div>
             </div>
@@ -123,7 +128,7 @@ const UserList: React.FC = () => {
                 onClick={() => { setSelectedUser(null); setShowUserModal(true) }}
                 disabled={!canCreate}
             />
-            {showUserModal && <UserModal readOnly={!canCreate} user={selectedUser} onClose={() => { setSelectedUser(null); setShowUserModal(false); }} onSuccess={handleOnSuccess}/>}
+            {showUserModal && <UserModal readOnly={!canCreate} user={selectedUser} onClose={() => { setSelectedUser(null); setShowUserModal(false); }} onSuccess={handleOnSuccess} />}
         </div>
     );
 };

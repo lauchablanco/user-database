@@ -19,6 +19,54 @@
 
 .filters-container {
     display: flex;
-    gap: 10px; /* Espacio entre filtros */
-    flex-wrap: wrap; /* Para que se acomoden si no entran en una sola línea */
+    gap: 10px; 
+    flex-wrap: wrap;
   }
+
+.title {
+    color: #ffd700;
+}
+
+.header-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #3f000f;
+    padding: 5px 20px 5px 20px;
+    height: 45px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.hogwarts-logo {
+    height: 40px;
+    width: auto;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-right: 30px;
+}
+
+.header-right h3 {
+    margin: 0;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.main-content-area {
+    padding-top: 60px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
