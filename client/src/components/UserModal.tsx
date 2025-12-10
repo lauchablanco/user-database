@@ -10,10 +10,11 @@ import { userServices } from '../services/userServices';
 interface UserModalProps {
   user: User | null;      // null = create mode
   onClose: () => void;
+  onSuccess: (user: User) => void;
   readOnly?: boolean;
 }
 
-const UserModal: React.FC<UserModalProps> = ({ user, onClose, readOnly = false }) => {
+const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnly = false }) => {
 
   // if existing user → edit. If not → create.
   const [formData, setFormData] = useState<UserForm>(() =>
@@ -55,9 +56,10 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, readOnly = false }
     setFormData({ ...formData, gender });
   };
 
-  const handleOnClick = () => {
-    if(formData?._id){
-      userServices.updateUser(formData);
+  const handleOnClick = async () => {
+    if (formData?._id) {
+      const user = await userServices.updateUser(formData); // {message:string, user:User}
+      onSuccess(user.user);
     } else {
       userServices.createUser(formData!);
     }

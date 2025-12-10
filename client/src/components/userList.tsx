@@ -43,6 +43,12 @@ const UserList: React.FC = () => {
         setShowUserModal(true);
     };
 
+    const handleOnSuccess = (user: User) => {
+        const updatedUsers = filteredUsers?.map(u => u._id === user._id ? user : u);
+        setFilteredUsers(updatedUsers!);
+        setShowUserModal(false);
+    };
+
     const handleFilterChange = (filterName: string, val: FilterOption[]) => {
         setFiltersState(prev => ({
             ...prev,
@@ -117,7 +123,7 @@ const UserList: React.FC = () => {
                 onClick={() => { setSelectedUser(null); setShowUserModal(true) }}
                 disabled={!canCreate}
             />
-            {showUserModal && <UserModal readOnly={!canCreate} user={selectedUser} onClose={() => { setSelectedUser(null); setShowUserModal(false); }} />}
+            {showUserModal && <UserModal readOnly={!canCreate} user={selectedUser} onClose={() => { setSelectedUser(null); setShowUserModal(false); }} onSuccess={handleOnSuccess}/>}
         </div>
     );
 };
