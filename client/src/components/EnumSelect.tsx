@@ -5,7 +5,6 @@ type EnumSelectProps<T extends string> = {
   enumObj: Record<string, T>;
   value: T;
   onChange: (value: T) => void;
-  placeholder?: string;
   isDisabled?: boolean;
 };
 
@@ -13,7 +12,6 @@ export function EnumSelect<T extends string>({
   enumObj,
   value,
   onChange,
-  placeholder,
   isDisabled
 }: EnumSelectProps<T>) {
 
@@ -24,7 +22,6 @@ export function EnumSelect<T extends string>({
     <Select
       options={options}
       value={selected}
-      placeholder={placeholder}
       isDisabled={isDisabled}
       onChange={(opt) => opt && onChange(opt.value as T)}
     />
