@@ -17,7 +17,8 @@ export const useFetchUsers = () : UseFetchUsersResult => {
     const fetchUsers = async () : Promise<void>  => {
         setLoading(true);
         try {
-            const response = await fetch('/users');  // With the proxy it's gonna be http://localhost:5000/users
+            //TODO: use userServices
+            const response = await fetch('/api/users');  // With the proxy it's gonna be http://localhost:5000/api/users
             if (!response.ok) {
                 throw new Error(await resolveErrorMessage(response));
             }

@@ -19,7 +19,7 @@ const app = express();
 const port = 5000;
 
 app.use(express.json());
-app.use(userRoutes);
+app.use("/api", userRoutes);
 
 //main route'
 app.get('/', (req:Request, res:Response) => {
