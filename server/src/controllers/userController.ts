@@ -50,7 +50,7 @@ const UserController = {
   
       res.status(200).json({ message: 'User updated', user: updatedUser });
     } catch (error) {
-      res.status(500).json({ error: 'There was an error trying to update the user' });
+      res.status(500).json({ message: 'There was an error trying to update the user', error });
     }
   },
   deleteUser: async (req: Req, res: Res) => {
