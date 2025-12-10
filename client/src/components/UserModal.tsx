@@ -5,6 +5,7 @@ import { UserForm } from '../types/permissions';
 import { EnumSelect } from './EnumSelect';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { userServices } from '../services/userServices';
 
 interface UserModalProps {
   user: User | null;      // null = create mode
@@ -17,7 +18,6 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, readOnly = false }
   // if existing user → edit. If not → create.
   const [formData, setFormData] = useState<UserForm>(() =>
     user ?? {
-      _id: "",
       fullName: "",
       email: "",
       birthDate: new Date(),
@@ -53,6 +53,14 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, readOnly = false }
 
   const handleGenderChange = (gender: Gender) => {
     setFormData({ ...formData, gender });
+  };
+
+  const handleOnClick = () => {
+    if(formData?._id){
+      userServices.updateUser(formData);
+    } else {
+      userServices.createUser(formData!);
+    }
   };
 
   return (
@@ -122,7 +130,7 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, readOnly = false }
         </div>
 
         {/* Save button */}
-        <button disabled={readOnly} className="save-button">
+        <button disabled={readOnly} className="save-button" onClick={handleOnClick}>
           {user ? "Save Changes" : "Create User"}
         </button>
 
