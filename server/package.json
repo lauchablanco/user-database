@@ -13,6 +13,7 @@
     "@types/express": "^5.0.0",
     "@types/node": "^22.12.0",
     "common-types": "file:../common-types",
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "mongoose": "^8.9.5",
@@ -21,6 +22,7 @@
     "typescript": "^5.7.3"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "ts2mjs": "^3.0.0"
   }
 }
