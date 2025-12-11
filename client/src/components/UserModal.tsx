@@ -58,10 +58,11 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
 
   const handleOnClick = async () => {
     if (formData?._id) {
-      const user = await userServices.updateUser(formData); // {message:string, user:User}
-      onSuccess(user.user);
+      const response = await userServices.updateUser(formData);
+      onSuccess(response.user);
     } else {
-      userServices.createUser(formData!);
+      const response = await userServices.createUser(formData!);
+      onSuccess(response.user)
     }
   };
 
