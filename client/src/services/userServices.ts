@@ -50,5 +50,6 @@ export const userServices = {
       }
     });
     if (!res.ok) throw new Error("Failed to delete user");
+    return res.json();
   }
 };
