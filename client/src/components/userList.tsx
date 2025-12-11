@@ -13,6 +13,8 @@ import { useAuth } from '../context/AuthContext';
 import { RoleSelector } from './RoleSelector';
 import FAB from './FAB';
 import { hasCapacity } from '../utils/permission';
+import { userServices } from '../services/userServices';
+import { ConfirmModal } from './ConfirmModal';
 
 const UserList: React.FC = () => {
 
@@ -22,9 +24,12 @@ const UserList: React.FC = () => {
     const [nameFilter, setNameFilter] = useState<string>('');
     const [selectedSort, setSelectedSort] = useState(sortOptions[0]);
     const [showUserModal, setShowUserModal] = useState(false);
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [userToDelete, setUserToDelete] = useState<User | null>(null);
     const { role } = useAuth();
 
     const canCreate = hasCapacity(role, "CREATE_USER");
+    const canDelete = hasCapacity(role, "DELETE_USER");
 
     const filtersEntries = Object.entries(filterEnums);
     const filtersKeys = Object.keys(filterEnums);
@@ -43,8 +48,20 @@ const UserList: React.FC = () => {
         setShowUserModal(true);
     };
 
+    const handleDeleteUser = async (user: User) => {
+        const response = await userServices.deleteUser(user._id);
+        const updatedUsers = filteredUsers?.filter(u => u._id != response.user._id);
+        setFilteredUsers(updatedUsers!);
+        setShowConfirmModal(false);
+    };
+
     const handleOnSuccess = (user: User) => {
-        const updatedUsers = filteredUsers?.map(u => u._id === user._id ? user : u);
+        let updatedUsers = filteredUsers;
+        if (selectedUser) {
+            updatedUsers = filteredUsers!.map(u => u._id === user._id ? user : u);
+        } else {
+            updatedUsers?.push(user)
+        }
         setFilteredUsers(updatedUsers!);
         setShowUserModal(false);
     };
@@ -120,7 +137,7 @@ const UserList: React.FC = () => {
             {!loading && !error && filteredUsers && (
                 <ul>
                     {filteredUsers.map((user: User) => (
-                        <UserPill key={user._id} user={user} onClick={() => handleUserClick(user)} />
+                        <UserPill key={user._id} user={user} disabled={!canDelete} onClick={() => handleUserClick(user)} onDelete={(userToDelete: User) => { setShowConfirmModal(true); setUserToDelete(userToDelete); }} />
                     ))}
                 </ul>
             )}
@@ -129,6 +146,13 @@ const UserList: React.FC = () => {
                 disabled={!canCreate}
             />
             {showUserModal && <UserModal readOnly={!canCreate} user={selectedUser} onClose={() => { setSelectedUser(null); setShowUserModal(false); }} onSuccess={handleOnSuccess} />}
+            {showConfirmModal && (
+                <ConfirmModal
+                    onConfirm={() => handleDeleteUser(userToDelete!)}
+                    onCancel={() => setShowConfirmModal(false)}
+                />
+            )}
+
         </div>
     );
 };
