@@ -1,0 +1,85 @@
+/* Overlay que cubre toda la pantalla */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(2px);
+  z-index: 1020;
+}
+
+/* Caja del modal */
+.modal-content {
+  background: #fff;
+  padding: 24px 28px;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  max-width: 380px;
+  width: 90%;
+  animation: modalFadeIn 0.18s ease-out;
+}
+
+/* Titulo opcional */
+.modal-content h2 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Texto */
+.modal-content p {
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Botones */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.modal-btn {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* Cancelar */
+.modal-btn.cancel {
+  background: #ddd;
+}
+
+.modal-btn.cancel:hover {
+  background: #c8c8c8;
+}
+
+/* Confirmar */
+.modal-btn.confirm {
+  background: #d9534f;
+  color: white;
+}
+
+.modal-btn.confirm:hover {
+  background: #c7423e;
+}
+
+/* Animación */
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
