@@ -17,6 +17,7 @@ const UserPill: React.FC<UserPillProps> = ({ user, onClick }) => {
       {/* Info de usuario */}
       <div className="user-info">
         <p className="user-name">{user.fullName}</p>
+        <p className="user-role">{user.role}</p>
         <p className="user-email">{user.email}</p>
       </div>
 
