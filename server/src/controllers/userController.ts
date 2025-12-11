@@ -7,7 +7,7 @@ const UserController = {
       const users = await User.find();
       res.status(200).json(users);
     } catch (error) {
-      res.status(500).json({ nessage: "Ërror getting users" });
+      res.status(500).json({ nessage: "Error getting users" });
     }
   },
   getUserById: async (req: Req, res: Res) => {
@@ -15,14 +15,14 @@ const UserController = {
     const user = await User.findById(id);
     try {
       res.status(200).json(user);
-    } catch {
-      res.status(500).json({ nessage: `Ërror getting user ${id}` });
+    } catch (error) {
+      res.status(500).json({ message: `Error getting user ${id}`, error });
     }
   },
   createUser: async (req: Req, res: Res) => {
     const { fullName, email, profilePicture, birthDate, house, pet, role, gender } = req.body;
-    if (!fullName|| !email || !profilePicture || !house || !pet || !role || !gender) {
-        res.status(400).json({ error: 'All fields are mandatory' });
+    if (!fullName|| !email || !house || !pet || !role || !gender) {
+        res.status(400).json({ error: 'Missing a mandatory field' });
         return;
     }
     try {
@@ -30,7 +30,7 @@ const UserController = {
       await newUser.save();
       res.status(201).json({message:'User has been created correctly', user: newUser});
     } catch (error) {
-      res.status(500).json({ messsage: error });
+      res.status(500).json({ message: 'There was an error trying to create the user', error });
     }
   },
   updateUser: async (req: Req, res: Res) => {
@@ -65,7 +65,7 @@ const UserController = {
     
         res.status(200).json({ message: 'User has been eliminated', user: deletedUser });
     } catch (error) {
-      res.status(500).json({ messsage: error });
+      res.status(500).json({ message: 'There was an error trying to delete the user', error });
     }
   },
 };
