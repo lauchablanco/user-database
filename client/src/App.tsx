@@ -1,6 +1,6 @@
 import './styles/App.css'
 import UserList from './components/UserList'
-import { AuthProvider, useAuth } from './context/AuthContext'
+import { useAuth } from './context/AuthContext'
 import { useFetchUsers } from './hooks/useFetchUsers';
 import { useEffect, useState } from 'react';
 import { User } from 'common-types';
