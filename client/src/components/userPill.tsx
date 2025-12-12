@@ -4,12 +4,12 @@ import { User } from "common-types";
 
 interface UserPillProps {
   user: User;
-  disabled: boolean;
+  canDelete: boolean;
   onClick: () => void;
   onDelete: (user: User) => void;
 }
 
-const UserPill: React.FC<UserPillProps> = ({ user, disabled, onClick, onDelete }) => {
+const UserPill: React.FC<UserPillProps> = ({ user, canDelete, onClick, onDelete }) => {
   const profilePicture = user.profilePicture || `../../public/default-profile-${user.gender.toLowerCase()}.jpg`; // Imagen local en public/images
   return (
     <div className={`user-pill ${user.house.toLowerCase()}`} onClick={onClick}>
@@ -25,7 +25,7 @@ const UserPill: React.FC<UserPillProps> = ({ user, disabled, onClick, onDelete }
 
       {/* Hogwarts House*/}
       <img src={`../../public/${user.house}.png`} alt={user.house} className="user-house" />
-      <button disabled={disabled} className={`delete-icon ${disabled ? "fab-disabled" : ""}`} onClick={(e) => { e.stopPropagation(); onDelete(user); }}>🗑️</button>
+      <button disabled={!canDelete} className={`delete-icon ${canDelete ? "" : "fab-disabled"}`} onClick={(e) => { e.stopPropagation(); onDelete(user); }}>🗑️</button>
     </div>
   );
 };
