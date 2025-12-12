@@ -87,15 +87,15 @@ function App() {
     }
 
     result = filtersKeys.reduce((filteredUsers, filterKey) => {
-      const filterValues = filtersState[filterKey]; //obtengo filtros seleccionados
+      const filterValues = filtersState[filterKey]; //Get selected filters
 
-      if (filterValues.length === 0) return filteredUsers; // Si no hay filtros activos, no hacemos nada.
+      if (filterValues.length === 0) return filteredUsers; // If any, return.
 
       return filteredUsers.filter((user) => {
-        const userValue = user[filterKey.toLowerCase() as keyof User] as string; //obtengo los valores del usuario de esa key
-        return filterValues.includes(userValue); //devuelvo si el valor del usuario está incluído en el filtro
+        const userValue = user[filterKey.toLowerCase() as keyof User] as string;
+        return filterValues.includes(userValue); //return user values from that key
       });
-    }, result); // Inicializamos `reduce` con el array original de usuarios.
+    }, result); // initialize `reduce` with user array.
 
     result = sortStudents(result, selectedSort);
     setFilteredUsers(result);
