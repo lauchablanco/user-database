@@ -1,5 +1,6 @@
 import { Gender, User } from "common-types";
 import { FilterOption } from "../types/filterOption";
+import { filterEnums } from "./enumUtils";
 
 export const sortOptions: FilterOption[] = [
     { value: "fullName-asc", label: "🔠 Name (A-Z)" },
@@ -29,4 +30,30 @@ export const sortStudents = (students: User[], sortOption: FilterOption) => {
                 return 0;
         }
     });
+}
+
+export const applyFiltersAndSort = (users: User[] | null, nameFilter:string, filtersState: Record<string, string[]>, selectedSort: FilterOption) => {
+    if(!users) return;
+    const filtersKeys = Object.keys(filterEnums);
+     let result = users;
+    // name filter
+    if (nameFilter) {
+      result = result.filter((user) =>
+        user.fullName.toLowerCase().includes(nameFilter.toLowerCase())
+      );
+    }
+
+    result = filtersKeys.reduce((filteredUsers, filterKey) => {
+      const filterValues = filtersState[filterKey]; //Get selected filters
+
+      if (filterValues.length === 0) return filteredUsers; // If none, return.
+
+      return filteredUsers.filter((user) => {
+        const userValue = user[filterKey.toLowerCase() as keyof User] as string;
+        return filterValues.includes(userValue); //return user values from that key
+      });
+    }, result); // initialize `reduce` with user array.
+
+    result = sortStudents(result, selectedSort);
+    return result; 
 }
