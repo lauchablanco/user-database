@@ -20,34 +20,38 @@ const UserController = {
     }
   },
   createUser: async (req: Req, res: Res) => {
-    const { fullName, email, profilePicture, birthDate, house, pet, role, gender } = req.body;
-    if (!fullName|| !email || !house || !pet || !role || !gender) {
-        res.status(400).json({ error: 'Missing a mandatory field' });
-        return;
+    const { fullName, email, birthDate, house, pet, role, gender } = req.body;
+    if (!fullName || !email || !house || !pet || !role || !gender) {
+      res.status(400).json({ error: 'Missing a mandatory field' });
+      return;
     }
+    const profilePicture = req.file ? req.file.filename : req.body.profilePicture;
     try {
       const newUser = new User({ fullName, email, profilePicture, birthDate, house, pet, role, gender });
       await newUser.save();
-      res.status(201).json({message:'User has been created correctly', user: newUser});
+      res.status(201).json({ message: 'User has been created correctly', user: newUser });
     } catch (error) {
       res.status(500).json({ message: 'There was an error trying to create the user', error });
     }
   },
   updateUser: async (req: Req, res: Res) => {
     const { id } = req.params;
-    const updatedData  = req.body;
+    const updatedData = req.body;
+    if (req.file) {
+      updatedData.profilePicture = req.file.filename;
+    }
     try {
-  
-      const updatedUser = await User.findByIdAndUpdate(id, updatedData , {
+
+      const updatedUser = await User.findByIdAndUpdate(id, updatedData, {
         new: true,
         runValidators: true,
       });
-  
+
       if (!updatedUser) {
         res.status(404).json({ error: 'User not found' });
         return;
       }
-  
+
       res.status(200).json({ message: 'User updated', user: updatedUser });
     } catch (error) {
       res.status(500).json({ message: 'There was an error trying to update the user', error });
@@ -56,14 +60,14 @@ const UserController = {
   deleteUser: async (req: Req, res: Res) => {
     const { id } = req.params;
     try {
-        const deletedUser = await User.findByIdAndDelete(id);
+      const deletedUser = await User.findByIdAndDelete(id);
 
-        if (!deletedUser) {
-          res.status(404).json({ error: 'User not found' });
-          return;
-        }
-    
-        res.status(200).json({ message: 'User has been eliminated', user: deletedUser });
+      if (!deletedUser) {
+        res.status(404).json({ error: 'User not found' });
+        return;
+      }
+
+      res.status(200).json({ message: 'User has been eliminated', user: deletedUser });
     } catch (error) {
       res.status(500).json({ message: 'There was an error trying to delete the user', error });
     }

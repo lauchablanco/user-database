@@ -5,7 +5,7 @@ import { UserForm } from '../types/permissions';
 import { EnumSelect } from './EnumSelect';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { userServices } from '../services/userServices';
+import { createFormData, userServices } from '../services/userServices';
 
 interface UserModalProps {
   user: User | null;      // null = create mode
@@ -33,12 +33,11 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>(
-    formData.profilePicture ?? ""
+    formData.profilePicture ?? `default-profile-${formData.gender?.toLowerCase()}.jpg`
   );
 
-  const profilePicture = formData.profilePicture ||
-    `../../public/default-profile-${formData.gender?.toLowerCase()}.jpg`;
-
+  const IMAGES_URL = import.meta.env.VITE_HOGWARTS_IMAGES_URL;
+  const profilePictureUrl = `${IMAGES_URL}/${previewUrl}`;
 
   // this function will replace the other 4
   const handleChange = (field: keyof User) =>
@@ -63,13 +62,15 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
   };
 
   const handleOnClick = async () => {
+    let response;
+    const data = createFormData(formData, selectedFile);
     if (formData?._id) {
-      const response = await userServices.updateUser(formData);
-      onSuccess(response.user);
+      response = await userServices.updateUser(formData._id, data);
     } else {
-      const response = await userServices.createUser(formData!);
-      onSuccess(response.user)
+      response = await userServices.createUser(data);
     }
+
+    onSuccess(response.user)
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,8 +107,7 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
         />
         <img
           src={
-            previewUrl ||
-            profilePicture
+            profilePictureUrl
           }
           alt="Profile"
           className={`profile-pic ${!readOnly ? "clickable" : ""}`}
