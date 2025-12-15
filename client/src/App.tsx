@@ -4,7 +4,7 @@ import { useAuth } from './context/AuthContext'
 import { useFetchUsers } from './hooks/useFetchUsers';
 import { useEffect, useMemo, useState } from 'react';
 import { User } from 'common-types';
-import { applyFiltersAndSort, sortOptions, sortStudents } from './utils/sortUtils';
+import { applyFiltersAndSort, sortOptions } from './utils/sortUtils';
 import { hasCapacity } from './utils/permission';
 import { filterEnums, generateEnumOptions } from './utils/enumUtils';
 import { userServices } from './services/userServices';
