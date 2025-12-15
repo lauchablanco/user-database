@@ -1,5 +1,5 @@
 import { Gender, House, Pet, Role, User } from 'common-types';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import "../styles/userModal.css";
 import { UserForm } from '../types/permissions';
 import { EnumSelect } from './EnumSelect';
@@ -28,6 +28,12 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
       gender: Gender.Male,
       profilePicture: ""
     }
+  );
+
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [previewUrl, setPreviewUrl] = useState<string>(
+    formData.profilePicture ?? ""
   );
 
   const profilePicture = formData.profilePicture ||
@@ -66,16 +72,53 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
     }
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setSelectedFile(file);
+
+    const objectUrl = URL.createObjectURL(file);
+    setPreviewUrl(objectUrl);
+  }
+
+  useEffect(() => {
+    return () => {
+      if (previewUrl?.startsWith("blob:")) {
+        URL.revokeObjectURL(previewUrl);
+      }
+    };
+  }, [previewUrl]);
+
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
 
         <button className="close-button" onClick={onClose}>✖</button>
 
-        {/* Foto */}
-        <img src={profilePicture} alt="Profile" className="profile-pic" />
+        {/* Profile Picture: Invisible file input to change the image */}
+        <input
+          type="file"
+          accept="image/*"
+          ref={fileInputRef}
+          style={{ display: "none" }}
+          onChange={handleFileChange}
+        />
+        <img
+          src={
+            previewUrl ||
+            profilePicture
+          }
+          alt="Profile"
+          className={`profile-pic ${!readOnly ? "clickable" : ""}`}
+          onClick={() => {
+            if (!readOnly) {
+              fileInputRef.current?.click();
+            }
+          }}
+        />
 
-        {/* Nombre */}
+        {/* Name */}
         <div className="form-row">
           <label>Name</label>
           <input
@@ -86,7 +129,7 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
           />
         </div>
 
-        {/* Fecha nacimiento */}
+        {/* Birthday */}
         <div className="form-row">
           <label>Birth Date</label>
           <DatePicker selected={formData.birthDate ? new Date(formData.birthDate) : null}

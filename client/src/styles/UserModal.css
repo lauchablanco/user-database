@@ -125,3 +125,11 @@ input[readonly] {
   gap: 12px;
   margin: 6px 0;
 }
+
+.profile-pic.clickable {
+  cursor: pointer;
+}
+
+.profile-pic.clickable:hover {
+  opacity: 0.85;
+}
