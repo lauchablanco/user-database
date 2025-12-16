@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { resolveErrorMessage } from "../utils/errorsUtils";
 import { User } from "common-types";
 import { mapUserFromApi, userServices } from "../services/userServices";
 
@@ -20,7 +19,7 @@ export const useFetchUsers = () : UseFetchUsersResult => {
         try {
             //TODO: use userServices
             const data = await userServices.getUsers();
-            const users = data.map(d => mapUserFromApi(d));
+            const users = data.map((d: any) => mapUserFromApi(d));
             setUsers(users);
             setError(null);
 
