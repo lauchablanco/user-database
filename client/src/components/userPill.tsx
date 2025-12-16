@@ -13,7 +13,6 @@ const UserPill: React.FC<UserPillProps> = ({ user, canDelete, onClick, onDelete 
   const IMAGES_URL = import.meta.env.VITE_HOGWARTS_IMAGES_URL;
   const profilePictureUrl = user.profilePicture ? `${IMAGES_URL}/${user.profilePicture}` : `${IMAGES_URL}/default-profile-${user.gender.toLowerCase()}.jpg`;
   const housePictureUrl = `${IMAGES_URL}/${user.house}.png`;
-  console.log(housePictureUrl);
   return (
     <div className={`user-pill ${user.house.toLowerCase()}`} onClick={onClick}>
       {/* Profile Picture */}
