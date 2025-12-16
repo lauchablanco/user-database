@@ -19,6 +19,9 @@ lerna-debug.log*
 .env
 *.env
 
+# profile pictures
+server/uploads
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
