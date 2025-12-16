@@ -20,7 +20,8 @@ lerna-debug.log*
 *.env
 
 # profile pictures
-server/uploads
+server/uploads/*
+!server/uploads/.gitkeep
 
 # Editor directories and files
 .vscode/*
