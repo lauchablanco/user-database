@@ -18,8 +18,7 @@ export const useFetchUsers = () : UseFetchUsersResult => {
         setLoading(true);
         try {
             //TODO: use userServices
-            const data = await userServices.getUsers();
-            const users = data.map(mapUserFromApi);
+            const users = await userServices.getUsers();
             setUsers(users);
             setError(null);
 

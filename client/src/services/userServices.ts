@@ -34,7 +34,8 @@ export const userServices = {
   async getUsers() {
     const res = await fetch(`${API_URL}/users`);
     if (!res.ok) throw new Error("Failed to fetch users");
-    return res.json();
+    const data = await res.json();
+    return data.map(mapUserFromApi);
   },
 
   async getUser(id: string) {
@@ -52,7 +53,8 @@ export const userServices = {
       body: formData
     });
     if (!res.ok) throw new Error("Failed to create user");
-    return res.json();
+    const data = await res.json()
+    return mapUserFromApi(data.user);
   },
 
   async updateUser(id: string, formData: FormData) {
@@ -64,7 +66,8 @@ export const userServices = {
       body: formData
     });
     if (!res.ok) throw new Error("Failed to update user");
-    return res.json();
+    const data = await res.json()
+    return mapUserFromApi(data.user);
   },
 
   async deleteUser(id: string) {
