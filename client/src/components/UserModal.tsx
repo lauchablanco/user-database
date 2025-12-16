@@ -1,5 +1,5 @@
 import { Gender, House, Pet, Role, User } from 'common-types';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import "../styles/userModal.css";
 import { UserForm } from '../types/permissions';
 import { EnumSelect } from './EnumSelect';
@@ -34,8 +34,23 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
 
-  const IMAGES_URL = import.meta.env.VITE_HOGWARTS_IMAGES_URL;
-  const profilePictureUrl = `${IMAGES_URL}/${formData.profilePicture}`;
+  const IMAGES_URL = `${import.meta.env.VITE_HOGWARTS_IMAGES_URL}`;
+
+  const getDefaultProfilePicture = (gender:Gender) => {
+    return `${IMAGES_URL}/default-profile-${gender.toLocaleLowerCase()}.jpg`
+  }
+
+  const profileImageSrc = useMemo(() => {
+  if (selectedFile) {
+    return URL.createObjectURL(selectedFile);
+  }
+
+  if (formData.profilePicture) {
+    return `${IMAGES_URL}/${formData.profilePicture}`;
+  }
+
+  return getDefaultProfilePicture(formData.gender!);
+}, [selectedFile, formData.profilePicture, formData.gender]);
 
   // this function will replace the other 4
   const handleChange = (field: keyof User) =>
@@ -60,15 +75,15 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
   };
 
   const handleOnClick = async () => {
-    let response;
+    let user;
     const data = createFormData(formData, selectedFile);
     if (formData?._id) {
-      response = await userServices.updateUser(formData._id, data);
+      user = await userServices.updateUser(formData._id, data);
     } else {
-      response = await userServices.createUser(data);
+      user = await userServices.createUser(data);
     }
 
-    onSuccess(response.user)
+    onSuccess(user)
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -104,9 +119,7 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
           onChange={handleFileChange}
         />
         <img
-          src={
-            previewUrl || profilePictureUrl
-          }
+          src={profileImageSrc}
           alt="Profile"
           className={`profile-pic ${!readOnly ? "clickable" : ""}`}
           onClick={() => {
