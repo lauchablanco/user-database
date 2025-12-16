@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { resolveErrorMessage } from "../utils/errorsUtils";
 import { User } from "common-types";
+import { mapUserFromApi, userServices } from "../services/userServices";
 
 type UseFetchUsersResult = {
     fetchedUsers: User[];
@@ -18,13 +19,10 @@ export const useFetchUsers = () : UseFetchUsersResult => {
         setLoading(true);
         try {
             //TODO: use userServices
-            const response = await fetch('/api/users');  // With the proxy it's gonna be http://localhost:5000/api/users
-            if (!response.ok) {
-                throw new Error(await resolveErrorMessage(response));
-            }
-
-            const data = await response.json();
-            setUsers(data);
+            const data = await userServices.getUsers();
+            const users = data.map(d => mapUserFromApi(d));
+            console.log(users);
+            setUsers(users);
             setError(null);
 
         } catch (error) {

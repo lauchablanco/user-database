@@ -1,7 +1,13 @@
+import { User } from "common-types";
 import { UserForm } from "../types/permissions";
 
 const API_URL = import.meta.env.VITE_HOGWARTS_API_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
+
+export const mapUserFromApi = (user: any): User => ({
+  ...user,
+  birthDate: user.birthDate ? new Date(user.birthDate) : null,
+});
 
 export const createFormData = (userForm: UserForm, selectedFile: File | null) => {
   const data = new FormData();
@@ -12,7 +18,7 @@ export const createFormData = (userForm: UserForm, selectedFile: File | null) =>
   data.append("role", userForm.role!);
   data.append("pet", userForm.pet!);
   data.append("gender", userForm.gender!);
-  
+
   if (userForm.birthDate) {
     data.append("birthDate", userForm.birthDate.toISOString());
   }
