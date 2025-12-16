@@ -32,12 +32,10 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [previewUrl, setPreviewUrl] = useState<string>(
-    formData.profilePicture ?? `default-profile-${formData.gender?.toLowerCase()}.jpg`
-  );
+  const [previewUrl, setPreviewUrl] = useState<string>('');
 
   const IMAGES_URL = import.meta.env.VITE_HOGWARTS_IMAGES_URL;
-  const profilePictureUrl = `${IMAGES_URL}/${previewUrl}`;
+  const profilePictureUrl = `${IMAGES_URL}/${formData.profilePicture}`;
 
   // this function will replace the other 4
   const handleChange = (field: keyof User) =>
@@ -107,7 +105,7 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
         />
         <img
           src={
-            profilePictureUrl
+            previewUrl || profilePictureUrl
           }
           alt="Profile"
           className={`profile-pic ${!readOnly ? "clickable" : ""}`}
