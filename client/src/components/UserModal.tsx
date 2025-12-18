@@ -6,7 +6,7 @@ import { EnumSelect } from './EnumSelect';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { createFormData, userServices } from '../services/userServices';
-import { FormErrors } from '../types/errors';
+import { FormErrors, ServerError } from '../types/errors';
 import { validateUserForm } from '../utils/errors';
 
 interface UserModalProps {
@@ -36,6 +36,7 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
   const [errors, setErrors] = useState<FormErrors | null>({});
+  const [serverError, setServerError] = useState<ServerError | null>(null);
 
   const IMAGES_URL = `${import.meta.env.VITE_HOGWARTS_IMAGES_URL}`;
 
@@ -82,7 +83,7 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
   };
 
   const handleOnClick = async () => {
-
+    setServerError(null);
     setErrors(null);
     const validationErrors = validateUserForm(formData);
     setErrors(validationErrors);
@@ -92,9 +93,30 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
     }
 
     const data = createFormData(formData, selectedFile);
-    const user = formData?._id ? await userServices.updateUser(formData._id, data) : await userServices.createUser(data);
 
-    onSuccess(user)
+    try {
+      const user = formData?._id ? await userServices.updateUser(formData._id, data) : await userServices.createUser(data);
+      onSuccess(user)
+    } catch (err: any) {
+      // Error de red (server caído, CORS, etc)
+      if (err instanceof TypeError) {
+        setServerError("Server is unreachable. Please try again later.");
+        return;
+      }
+
+      // Error del backend con estructura conocida
+      if (err?.errors) {
+        setErrors(err.errors);
+        return;
+      }
+
+      if (err?.message) {
+        setServerError(err.message);
+        return;
+      }
+
+      setServerError("Something went wrong. Please try again.");
+    }
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -114,6 +136,17 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
       }
     };
   }, [previewUrl]);
+
+  //Auto scroll to server error message
+  const serverErrorRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (serverError && serverErrorRef.current) {
+      serverErrorRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+  }, [serverError]);
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -213,6 +246,11 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
           {user ? "Save Changes" : "Create User"}
         </button>
 
+        {serverError && (
+          <div ref={serverErrorRef} className="server-error">
+            {serverError}
+          </div>
+        )}
 
       </div>
     </div>

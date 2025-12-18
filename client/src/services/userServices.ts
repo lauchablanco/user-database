@@ -52,7 +52,10 @@ export const userServices = {
       },
       body: formData
     });
-    if (!res.ok) throw new Error("Failed to create user");
+    if (!res.ok) {
+      const { message, errors } = await res.json();
+      throw { message, errors, status: res.status };
+    }
     const data = await res.json()
     return mapUserFromApi(data.user);
   },
@@ -65,7 +68,10 @@ export const userServices = {
       },
       body: formData
     });
-    if (!res.ok) throw new Error("Failed to update user");
+    if (!res.ok) {
+      const { message, errors } = await res.json();
+      throw { message, errors, status: res.status };
+    }
     const data = await res.json()
     return mapUserFromApi(data.user);
   },

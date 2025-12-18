@@ -40,6 +40,16 @@
   transition: 0.15s ease;
 }
 
+.server-error {
+  margin-top: 12px;
+  padding: 10px 12px;
+  background-color: rgba(211, 47, 47, 0.08);
+  color: #d32f2f;
+  border: 1px solid rgba(211, 47, 47, 0.3);
+  border-radius: 4px;
+  font-size: 0.9rem;
+}
+
 .close-button:hover {
   opacity: 1;
 }
@@ -52,6 +62,7 @@
   object-fit: cover;
   margin: 0 auto 8px auto;
   border: 3px solid #ececec;
+  flex-shrink: 0;
 }
 
 /* --- Form spacing --- */
