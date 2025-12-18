@@ -6,6 +6,8 @@ import { EnumSelect } from './EnumSelect';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { createFormData, userServices } from '../services/userServices';
+import { FormErrors } from '../types/errors';
+import { validateUserForm } from '../utils/errors';
 
 interface UserModalProps {
   user: User | null;      // null = create mode
@@ -33,28 +35,33 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
+  const [errors, setErrors] = useState<FormErrors | null>({});
 
   const IMAGES_URL = `${import.meta.env.VITE_HOGWARTS_IMAGES_URL}`;
 
-  const getDefaultProfilePicture = (gender:Gender) => {
+  const getDefaultProfilePicture = (gender: Gender) => {
     return `${IMAGES_URL}/default-profile-${gender.toLocaleLowerCase()}.jpg`
   }
 
   const profileImageSrc = useMemo(() => {
-  if (selectedFile) {
-    return URL.createObjectURL(selectedFile);
-  }
+    if (selectedFile) {
+      return URL.createObjectURL(selectedFile);
+    }
 
-  if (formData.profilePicture) {
-    return `${IMAGES_URL}/${formData.profilePicture}`;
-  }
+    if (formData.profilePicture) {
+      return `${IMAGES_URL}/${formData.profilePicture}`;
+    }
 
-  return getDefaultProfilePicture(formData.gender!);
-}, [selectedFile, formData.profilePicture, formData.gender]);
+    return getDefaultProfilePicture(formData.gender!);
+  }, [selectedFile, formData.profilePicture, formData.gender]);
 
-  // this function will replace the other 4
+  // this function will might replace the other 4
   const handleChange = (field: keyof User) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
+      //clean of empty fields errors after submit.
+      if (e.target.value && errors && errors[field]) {
+        setErrors({ ...errors, [field]: null })
+      }
       setFormData({ ...formData, [field]: e.target.value });
     };
 
@@ -75,13 +82,17 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
   };
 
   const handleOnClick = async () => {
-    let user;
-    const data = createFormData(formData, selectedFile);
-    if (formData?._id) {
-      user = await userServices.updateUser(formData._id, data);
-    } else {
-      user = await userServices.createUser(data);
+
+    setErrors(null);
+    const validationErrors = validateUserForm(formData);
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length > 0) {
+      return;
     }
+
+    const data = createFormData(formData, selectedFile);
+    const user = formData?._id ? await userServices.updateUser(formData._id, data) : await userServices.createUser(data);
 
     onSuccess(user)
   };
@@ -132,58 +143,69 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
         {/* Name */}
         <div className="form-row">
           <label>Name</label>
-          <input
-            type="text"
-            value={formData.fullName}
-            onChange={handleChange("fullName")}
-            readOnly={readOnly}
-          />
+          <div className="input-wrapper">
+            <input
+              type="text"
+              value={formData.fullName}
+              onChange={handleChange("fullName")}
+              readOnly={readOnly}
+              className={errors?.fullName ? "input-error" : ""}
+            />
+            {errors?.fullName && <span className="error-text">{errors.fullName}</span>}
+          </div>
         </div>
 
         {/* Birthday */}
         <div className="form-row">
           <label>Birth Date</label>
-          <DatePicker selected={formData.birthDate ? new Date(formData.birthDate) : null}
-            onChange={(date) =>
-              setFormData({ ...formData, birthDate: date! })
-            }
-            readOnly={readOnly}
-          />
+          <div className="input-wrapper">
+            <DatePicker selected={formData.birthDate ? new Date(formData.birthDate) : null}
+              onChange={(date) =>
+                setFormData({ ...formData, birthDate: date! })
+              }
+              readOnly={readOnly}
+            />
+            {errors?.birthDate && <span className="error-text">{errors.birthDate}</span>}
+          </div>
         </div>
 
         {/* Email */}
         <div className="form-row">
           <label>Email</label>
-          <input
-            type="email"
-            value={formData.email}
-            onChange={handleChange("email")}
-            readOnly={readOnly}
-          />
+          <div className="input-wrapper">
+            <input
+              type="email"
+              value={formData.role === Role.GHOST ? "It's a Ghost!" : formData.email}
+              onChange={handleChange("email")}
+              readOnly={readOnly || formData.role === Role.GHOST}
+              className={errors?.email ? "input-error" : ""}
+            />
+            {errors?.email && <span className="error-text">{errors.email}</span>}
+          </div>
         </div>
 
         {/* House */}
         <div className="form-row">
           <label>House</label>
-          <EnumSelect enumObj={House} value={formData.house!} onChange={handleHouseChange} isDisabled={readOnly} />
+          <EnumSelect enumObj={House} value={formData.house} onChange={handleHouseChange} isDisabled={readOnly} />
         </div>
 
         {/* Role */}
         <div className="form-row">
           <label>Role</label>
-          <EnumSelect enumObj={Role} value={formData.role!} onChange={handleRoleChange} isDisabled={readOnly} />
+          <EnumSelect enumObj={Role} value={formData.role} onChange={handleRoleChange} isDisabled={readOnly} />
         </div>
 
         {/* Pet */}
         <div className="form-row">
           <label>Pet</label>
-          <EnumSelect enumObj={Pet} value={formData.pet!} onChange={handlePetChange} isDisabled={readOnly} />
+          <EnumSelect enumObj={Pet} value={formData.pet} onChange={handlePetChange} isDisabled={readOnly} />
         </div>
 
         {/* Gender */}
         <div className="form-row">
           <label>Gender</label>
-          <EnumSelect enumObj={Gender} value={formData.gender!} onChange={handleGenderChange} isDisabled={readOnly} />
+          <EnumSelect enumObj={Gender} value={formData.gender} onChange={handleGenderChange} isDisabled={readOnly} />
         </div>
 
         {/* Save button */}

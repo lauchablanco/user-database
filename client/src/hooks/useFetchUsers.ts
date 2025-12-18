@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { User } from "common-types";
-import { mapUserFromApi, userServices } from "../services/userServices";
+import { userServices } from "../services/userServices";
 
 type UseFetchUsersResult = {
     fetchedUsers: User[];

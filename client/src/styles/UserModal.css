@@ -133,3 +133,18 @@ input[readonly] {
 .profile-pic.clickable:hover {
   opacity: 0.85;
 }
+
+.error-text {
+  color: #d32f2f;
+  font-size: 0.85rem;
+  line-height: 1.2;
+}
+
+.input-error {
+  border: 1px solid #d32f2f;
+}
+
+.input-error:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.2);
+}

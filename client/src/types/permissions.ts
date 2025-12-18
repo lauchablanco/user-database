@@ -17,9 +17,9 @@ export const permissionsRecord: Record<Role, Permissions> = {
 };
 
 export type UserForm = Partial<User> & {
-  birthDate?: Date; // en forms casi siempre es string
-  house?: House;
-  role?: Role;
-  pet?: Pet;
-  gender?: Gender;
+  birthDate: Date;
+  house: House;
+  role: Role;
+  pet: Pet;
+  gender: Gender;
 };
