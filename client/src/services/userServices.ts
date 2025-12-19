@@ -1,4 +1,4 @@
-import { User } from "common-types";
+import { Role, User } from "common-types";
 import { UserForm } from "../types/permissions";
 
 const API_URL = import.meta.env.VITE_HOGWARTS_API_URL;
@@ -44,11 +44,12 @@ export const userServices = {
     return res.json();
   },
 
-  async createUser(formData: FormData) {
+  async createUser(formData: FormData, role: Role) {
     const res = await fetch(`${API_URL}/users`, {
       method: "POST",
       headers: {
-        "x-api-key": API_KEY
+        "x-api-key": API_KEY,
+        "x-user-role": role
       },
       body: formData
     });
@@ -60,11 +61,12 @@ export const userServices = {
     return mapUserFromApi(data.user);
   },
 
-  async updateUser(id: string, formData: FormData) {
+  async updateUser(id: string, formData: FormData, role: Role) {
     const res = await fetch(`${API_URL}/users/${id}`, {
       method: "PUT",
       headers: {
-        "x-api-key": API_KEY
+        "x-api-key": API_KEY,
+        "x-user-role": role
       },
       body: formData
     });
@@ -76,11 +78,12 @@ export const userServices = {
     return mapUserFromApi(data.user);
   },
 
-  async deleteUser(id: string) {
+  async deleteUser(id: string, role: Role) {
     const res = await fetch(`${API_URL}/users/${id}`, {
       method: "DELETE",
       headers: {
-        "x-api-key": API_KEY
+        "x-api-key": API_KEY,
+        "x-user-role": role
       }
     });
     if (!res.ok) throw new Error("Failed to delete user");

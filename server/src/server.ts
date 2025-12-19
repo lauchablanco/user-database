@@ -29,7 +29,7 @@ const __dirname = path.dirname(__filename);
 app.use(cors({
   origin: "http://localhost:5173",   // frontend
   methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "x-api-key"]
+  allowedHeaders: ["Content-Type", "x-api-key", "x-user-role"]
 }));
 
 app.use(express.json());

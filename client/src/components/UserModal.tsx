@@ -5,19 +5,19 @@ import { UserForm } from '../types/permissions';
 import { EnumSelect } from './EnumSelect';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { createFormData, userServices } from '../services/userServices';
-import { FormErrors, ServerError } from '../types/errors';
+import { FormErrors } from '../types/errors';
 import { validateUserForm } from '../utils/errors';
 
 interface UserModalProps {
-  user: User | null;      // null = create mode
-  onClose: () => void;
-  onSuccess: (user: User) => void;
+  user: User | null;
   readOnly?: boolean;
+  onClose: () => void;
+  onSubmit: (formData: UserForm, file: File | null) => Promise<void>;
+  serverError: string | null;
 }
 
-const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnly = false }) => {
 
+const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSubmit, serverError, readOnly = false }) => {
   // if existing user → edit. If not → create.
   const [formData, setFormData] = useState<UserForm>(() =>
     user ?? {
@@ -36,7 +36,6 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string>('');
   const [errors, setErrors] = useState<FormErrors | null>({});
-  const [serverError, setServerError] = useState<ServerError | null>(null);
 
   const IMAGES_URL = `${import.meta.env.VITE_HOGWARTS_IMAGES_URL}`;
 
@@ -59,10 +58,6 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
   // this function will might replace the other 4
   const handleChange = (field: keyof User) =>
     (e: React.ChangeEvent<HTMLInputElement>) => {
-      //clean of empty fields errors after submit.
-      if (e.target.value && errors && errors[field]) {
-        setErrors({ ...errors, [field]: null })
-      }
       setFormData({ ...formData, [field]: e.target.value });
     };
 
@@ -83,40 +78,15 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSuccess, readOnl
   };
 
   const handleOnClick = async () => {
-    setServerError(null);
-    setErrors(null);
+    setErrors(null)
     const validationErrors = validateUserForm(formData);
-    setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
       return;
     }
 
-    const data = createFormData(formData, selectedFile);
-
-    try {
-      const user = formData?._id ? await userServices.updateUser(formData._id, data) : await userServices.createUser(data);
-      onSuccess(user)
-    } catch (err: any) {
-      // Error de red (server caído, CORS, etc)
-      if (err instanceof TypeError) {
-        setServerError("Server is unreachable. Please try again later.");
-        return;
-      }
-
-      // Error del backend con estructura conocida
-      if (err?.errors) {
-        setErrors(err.errors);
-        return;
-      }
-
-      if (err?.message) {
-        setServerError(err.message);
-        return;
-      }
-
-      setServerError("Something went wrong. Please try again.");
-    }
+    setErrors(validationErrors);
+    await onSubmit(formData, selectedFile);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {

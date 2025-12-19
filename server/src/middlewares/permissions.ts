@@ -6,13 +6,13 @@ export const requireRoles = (allowedRoles: Role[]) => {
     const role = req.header("x-user-role");
 
     if (!role) {
-      res.status(401).json({ error: "Unauthorized" });
+      res.status(401).json({ message: "Unauthorized" });
       return;
     }
 
     if (!allowedRoles.includes(role as Role)) {
       res.status(403).json({
-        error: "You do not have permission to perform this action"
+        message: "You do not have permission to perform this action"
       });
       return;
     }

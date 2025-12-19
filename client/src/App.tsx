@@ -7,7 +7,7 @@ import { User } from 'common-types';
 import { applyFiltersAndSort, sortOptions } from './utils/sortUtils';
 import { hasCapacity } from './utils/permission';
 import { filterEnums, generateEnumOptions } from './utils/enumUtils';
-import { userServices } from './services/userServices';
+import { createFormData, userServices } from './services/userServices';
 import { FilterOption } from './types/filterOption';
 import { RoleSelector } from './components/RoleSelector';
 import UserFilter from './components/Filter';
@@ -16,6 +16,7 @@ import FAB from './components/FAB';
 import UserModal from './components/UserModal';
 import { ConfirmModal } from './components/ConfirmModal';
 import "./styles/UserList.css"
+import { UserForm } from './types/permissions';
 
 
 function App() {
@@ -27,8 +28,9 @@ function App() {
   const [showUserModal, setShowUserModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [userToDelete, setUserToDelete] = useState<User | null>(null);
+  const [serverError, setServerError] = useState<string | null>(null);
   const { role } = useAuth();
-  
+
   const canCreate = hasCapacity(role, "CREATE_USER");
   const canDelete = hasCapacity(role, "DELETE_USER");
 
@@ -55,20 +57,48 @@ function App() {
   };
 
   const handleDeleteUser = async (user: User) => {
-    const response = await userServices.deleteUser(user._id);
+    const response = await userServices.deleteUser(user._id, role);
     const updatedUsers = users?.filter(u => u._id != response.user._id);
     setUsers(updatedUsers!);
     setShowConfirmModal(false);
   };
 
-  const handleOnSuccess = (user: User) => {
-    let updatedUsers = users;
-    if (selectedUser) {
-      updatedUsers = users!.map(u => u._id === user._id ? {...user} : u);
-    } else {
-      updatedUsers = [...users!, {...user}]
+  const handleSubmitUser = async (formData: UserForm, file: File | null) => {
+    try {
+      setServerError(null);
+
+      const data = createFormData(formData, file);
+
+      const user = formData._id
+        ? await userServices.updateUser(formData._id, data, role)
+        : await userServices.createUser(data, role);
+
+      handleOnSuccess(user);
+
+    } catch (err: any) {
+      //Network error
+      if (err instanceof TypeError) {
+        setServerError("Server is unreachable. Please try again later.");
+        return;
+      }
+
+      //API error
+      if (err?.message) {
+        setServerError(err.message);
+        return;
+      }
+
+      //others
+      setServerError("Something went wrong. Please try again.");
     }
-    setUsers(updatedUsers!);
+  };
+
+  const handleOnSuccess = (user: User) => {
+    const updatedUsers = selectedUser
+      ? users!.map(u => u._id === user._id ? { ...user } : u)
+      : [...users!, { ...user }];
+
+    setUsers(updatedUsers);
     setShowUserModal(false);
   };
 
@@ -124,7 +154,7 @@ function App() {
             onClick={() => { setSelectedUser(null); setShowUserModal(true) }}
             disabled={!canCreate}
           />
-          {showUserModal && <UserModal readOnly={!canCreate} user={selectedUser} onClose={() => { setSelectedUser(null); setShowUserModal(false); }} onSuccess={handleOnSuccess} />}
+          {showUserModal && <UserModal serverError={serverError} readOnly={!canCreate} user={selectedUser} onClose={() => { setSelectedUser(null); setShowUserModal(false); }} onSubmit={handleSubmitUser} />}
           {showConfirmModal && (
             <ConfirmModal
               onConfirm={() => handleDeleteUser(userToDelete!)}
