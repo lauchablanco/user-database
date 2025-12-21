@@ -6,7 +6,7 @@ import { EnumSelect } from './EnumSelect';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { FormErrors } from '../types/errors';
-import { validateUserForm } from '../utils/errors';
+import { validateUserForm } from '../utils/error';
 
 interface UserModalProps {
   user: User | null;

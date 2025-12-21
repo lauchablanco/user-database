@@ -1,7 +1,7 @@
 import { useAuth } from "../context/AuthContext";
 import { Role } from "common-types";
 import { EnumSelect } from "./EnumSelect";
-import { generateEnumOptions } from "../utils/enumUtils";
+import { generateEnumOptions } from "../utils/enum";
 
 export function RoleSelector() {
   const { role, setRole } = useAuth();

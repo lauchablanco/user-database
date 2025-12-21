@@ -1,5 +1,5 @@
 import Select from "react-select";
-import { generateEnumOptions } from "../utils/enumUtils";
+import { generateEnumOptions } from "../utils/enum";
 
 type EnumSelectProps<T extends string> = {
   enumObj: Record<string, T>;

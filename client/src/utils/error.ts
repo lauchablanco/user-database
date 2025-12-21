@@ -1,7 +1,7 @@
 import { Role } from "common-types";
 import { FormErrors } from "../types/errors";
 import { UserForm } from "../types/permissions";
-import { calculateAge } from "./dateUtils";
+import { calculateAge } from "./date";
 
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

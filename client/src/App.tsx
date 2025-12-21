@@ -4,10 +4,10 @@ import { useAuth } from './context/AuthContext'
 import { useFetchUsers } from './hooks/useFetchUsers';
 import { useEffect, useMemo, useState } from 'react';
 import { User } from 'common-types';
-import { applyFiltersAndSort, sortOptions } from './utils/sortUtils';
+import { applyFiltersAndSort, createFormData, sortOptions } from './utils/user';
 import { hasCapacity } from './utils/permission';
-import { filterEnums, generateEnumOptions } from './utils/enumUtils';
-import { createFormData, userServices } from './services/userServices';
+import { filterEnums, generateEnumOptions } from './utils/enum';
+import { userServices } from './services/userServices';
 import { FilterOption } from './types/filterOption';
 import { RoleSelector } from './components/RoleSelector';
 import UserFilter from './components/Filter';

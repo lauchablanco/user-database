@@ -1,5 +1,5 @@
 import Select from "react-select";
-import { sortOptions } from "../utils/sortUtils";
+import { sortOptions } from "../utils/user";
 import { FilterOption } from "../types/filterOption";
 
 interface SorterProps {

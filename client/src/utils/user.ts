@@ -1,6 +1,33 @@
 import { Gender, User } from "common-types";
 import { FilterOption } from "../types/filterOption";
-import { filterEnums } from "./enumUtils";
+import { filterEnums } from "./enum";
+import { UserForm } from "../types/permissions";
+
+export const mapUserFromApi = (user: any): User => ({
+  ...user,
+  birthDate: user.birthDate ? new Date(user.birthDate) : null,
+});
+
+export const createFormData = (userForm: UserForm, selectedFile: File | null) => {
+  const data = new FormData();
+
+  data.append("fullName", userForm.fullName!);
+  data.append("email", userForm.email!);
+  data.append("house", userForm.house!);
+  data.append("role", userForm.role!);
+  data.append("pet", userForm.pet!);
+  data.append("gender", userForm.gender!);
+
+  if (userForm.birthDate) {
+    data.append("birthDate", userForm.birthDate.toISOString());
+  }
+
+  if (selectedFile) {
+    data.append("profilePicture", selectedFile);
+  }
+
+  return data;
+}
 
 export const sortOptions: FilterOption[] = [
     { value: "fullName-asc", label: "🔠 Name (A-Z)" },
