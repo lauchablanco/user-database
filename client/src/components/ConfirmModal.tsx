@@ -1,19 +1,24 @@
 import "../styles/ConfirmModal.css";
 
 interface ConfirmModalProps {
-  onConfirm: () => void;
-  onCancel: () => void;
+  mode: "warning" | "error";
+  title: string;
+  message: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  onConfirm?: () => void;
+  onClose: () => void;
 }
 
-export function ConfirmModal({onConfirm, onCancel }: ConfirmModalProps) {
+export function ConfirmModal({mode, title, message, onConfirm, onClose }: ConfirmModalProps) {
   return (
-    <div className="modal-overlay" onClick={onCancel}>
+    <div className="modal-overlay" onClick={onClose}>
       <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-        <h2>Are you sure?</h2>
-        <p>This action cannot be undone.</p>
+        <h2>{title}</h2>
+        <p>{message}</p>
         <div className="modal-buttons">
-          <button className="modal-btn cancel" onClick={onCancel}>Cancel</button>
-          <button className="modal-btn confirm" onClick={onConfirm}>Yes, delete</button>
+          {mode === "warning" && <button className="modal-btn cancel" onClick={onClose}>Cancel</button>}
+          <button className="modal-btn confirm" onClick={onConfirm}>Continue</button>
         </div>
       </div>
     </div>

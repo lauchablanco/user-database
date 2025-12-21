@@ -29,6 +29,12 @@ function App() {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [userToDelete, setUserToDelete] = useState<User | null>(null);
   const [serverError, setServerError] = useState<string | null>(null);
+  const [confirmModal, setConfirmModal] = useState<{
+    mode: "warning" | "error";
+    title: string;
+    message: string;
+    onConfirm?: () => void;
+  } | null>(null);
   const { role } = useAuth();
 
   const canCreate = hasCapacity(role, "CREATE_USER");
@@ -56,11 +62,23 @@ function App() {
     setShowUserModal(true);
   };
 
-  const handleDeleteUser = async (user: User) => {
-    const response = await userServices.deleteUser(user._id, role);
-    const updatedUsers = users?.filter(u => u._id != response.user._id);
-    setUsers(updatedUsers!);
-    setShowConfirmModal(false);
+  const handleDeleteUser = async (userId: string) => {
+    try {
+
+      const response = await userServices.deleteUser(userId, role);
+      const updatedUsers = users?.filter(u => u._id != response.user._id);
+      setUsers(updatedUsers!);
+      setShowConfirmModal(false);
+
+    } catch (err: any) {
+      setConfirmModal({
+        mode: "error",
+        title: "Delete failed",
+        message: err.message,
+        onConfirm: () => {setConfirmModal(null); setShowConfirmModal(false);}
+      });
+    }
+
   };
 
   const handleSubmitUser = async (formData: UserForm, file: File | null) => {
@@ -92,6 +110,17 @@ function App() {
       setServerError("Something went wrong. Please try again.");
     }
   };
+
+  const handleOnDelete = (user: User) => {
+    setConfirmModal({
+      mode: "warning",
+      title: "Delete user",
+      message: "Are you sure you want to delete this user?",
+      onConfirm: () => handleDeleteUser(user._id),
+    });
+    setShowConfirmModal(true);
+    setUserToDelete(userToDelete);
+  }
 
   const handleOnSuccess = (user: User) => {
     const updatedUsers = selectedUser
@@ -148,17 +177,20 @@ function App() {
           </div>
           }
           {!loading && !error && users && (
-            <UserList users={filteredUsers!} canDelete={canDelete} onClick={handleUserClick} onDelete={(userToDelete: User) => { setShowConfirmModal(true); setUserToDelete(userToDelete); }}></UserList>
+            <UserList users={filteredUsers!} canDelete={canDelete} onClick={handleUserClick} onDelete={(user: User) => handleOnDelete(user)}></UserList>
           )}
           <FAB
             onClick={() => { setSelectedUser(null); setShowUserModal(true) }}
             disabled={!canCreate}
           />
           {showUserModal && <UserModal serverError={serverError} readOnly={!canCreate} user={selectedUser} onClose={() => { setSelectedUser(null); setShowUserModal(false); }} onSubmit={handleSubmitUser} />}
-          {showConfirmModal && (
+          {showConfirmModal && confirmModal && (
             <ConfirmModal
-              onConfirm={() => handleDeleteUser(userToDelete!)}
-              onCancel={() => setShowConfirmModal(false)}
+              mode={confirmModal.mode}
+              title={confirmModal.title}
+              message={confirmModal.message}
+              onConfirm={confirmModal.onConfirm}
+              onClose={() => setConfirmModal(null)}
             />
           )}
 
