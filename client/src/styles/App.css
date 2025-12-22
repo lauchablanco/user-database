@@ -36,6 +36,21 @@ body {
   text-align: center;
 }
 
+.page-title {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 👈 centra el bloque */
+  gap: 12px;
+  margin: 0 auto 20px;
+  width: fit-content; /* 👈 clave */
+}
+
+.title-logo {
+  height: 70px;
+  width: auto;
+  display: block;
+}
+
 .user-list-filter {
   margin-bottom: 20px;
 }

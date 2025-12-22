@@ -147,8 +147,14 @@ function App() {
       <main className="app-content">
         <div className='bg-school'>
           <div className="user-list-container">
-            <h2 className="title">Users List</h2>
-
+            <div className="page-title">
+              <h2 className="title">Users List</h2>
+              <img
+                src="/hogwarts.png"
+                alt="Hogwarts"
+                className="title-logo"
+              />
+            </div>
             <div className="user-list-filter">
               <div className="filters-container">
                 <input
