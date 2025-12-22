@@ -27,7 +27,7 @@ const UserPill: React.FC<UserPillProps> = ({ user, canDelete, onClick, onDelete 
 
       {/* Hogwarts House*/}
       <img src={housePictureUrl} alt={user.house} className="user-house" />
-      <button disabled={!canDelete} className={`delete-icon ${canDelete ? "" : "fab-disabled"}`} onClick={(e) => { e.stopPropagation(); onDelete(user); }}>🗑️</button>
+      <button disabled={!canDelete} className={`delete-icon ${canDelete ? "" : "delete-button-disabled"}`} onClick={(e) => { e.stopPropagation(); onDelete(user); }}>🗑️</button>
     </div>
   );
 };

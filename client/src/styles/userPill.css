@@ -7,7 +7,6 @@
   border-radius: 10px;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
   margin: 10px 0;
-  font-family: Arial, sans-serif;
 }
 
 /* Imagen de perfil */
@@ -38,6 +37,7 @@
 .user-house {
   width: 70px;
   height: 70px;
+  margin-right: 30px;
 }
 
 /* Colores pastel para cada casa */
@@ -55,4 +55,27 @@
 
 .ravenclaw {
   background-color: #dde5ff;
+}
+
+.user-role {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.delete-button-disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.7;
+}
+
+.delete-icon {
+  background: transparent;
+  border: none;
+  font-size: 18px;
+  margin-right: 20px;
+}
+
+.delete-icon:hover {
+  transform: scale(1.1);
 }
