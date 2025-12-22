@@ -130,85 +130,87 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSubmit, serverEr
           style={{ display: "none" }}
           onChange={handleFileChange}
         />
-        <img
-          src={profileImageSrc}
-          alt="Profile"
-          className={`profile-pic ${!readOnly ? "clickable" : ""}`}
-          onClick={() => {
-            if (!readOnly) {
-              fileInputRef.current?.click();
-            }
-          }}
-        />
-
-        {/* Name */}
-        <div className="form-row">
-          <label>Name</label>
-          <div className="input-wrapper">
-            <input
-              type="text"
-              value={formData.fullName}
-              onChange={handleChange("fullName")}
-              readOnly={readOnly}
-              className={errors?.fullName ? "input-error" : ""}
-            />
-            {errors?.fullName && <span className="error-text">{errors.fullName}</span>}
-          </div>
-        </div>
-
-        {/* Birthday */}
-        <div className="form-row">
-          <label>Birth Date</label>
-          <div className="input-wrapper">
-            <DatePicker selected={formData.birthDate ? new Date(formData.birthDate) : null}
-              onChange={(date) =>
-                setFormData({ ...formData, birthDate: date! })
+        <div className="user-modal-header">
+          <img
+            src={profileImageSrc}
+            alt="Profile"
+            className={`profile-pic ${!readOnly ? "clickable" : ""}`}
+            onClick={() => {
+              if (!readOnly) {
+                fileInputRef.current?.click();
               }
-              readOnly={readOnly}
-            />
-            {errors?.birthDate && <span className="error-text">{errors.birthDate}</span>}
+            }}
+          />
+        </div>
+        <div className='form-content'>
+          {/* Name */}
+          <div className="form-row">
+            <label>Name</label>
+            <div className="input-wrapper">
+              <input
+                type="text"
+                value={formData.fullName}
+                onChange={handleChange("fullName")}
+                readOnly={readOnly}
+                className={errors?.fullName ? "input-error" : ""}
+              />
+              {errors?.fullName && <span className="error-text">{errors.fullName}</span>}
+            </div>
+          </div>
+
+          {/* Birthday */}
+          <div className="form-row">
+            <label>Birth Date</label>
+            <div className="input-wrapper">
+              <DatePicker selected={formData.birthDate ? new Date(formData.birthDate) : null}
+                onChange={(date) =>
+                  setFormData({ ...formData, birthDate: date! })
+                }
+                readOnly={readOnly}
+              />
+              {errors?.birthDate && <span className="error-text">{errors.birthDate}</span>}
+            </div>
+          </div>
+
+          {/* Email */}
+          <div className="form-row">
+            <label>Email</label>
+            <div className="input-wrapper">
+              <input
+                type="email"
+                value={formData.role === Role.GHOST ? "It's a Ghost!" : formData.email}
+                onChange={handleChange("email")}
+                readOnly={readOnly || formData.role === Role.GHOST}
+                className={errors?.email ? "input-error" : ""}
+              />
+              {errors?.email && <span className="error-text">{errors.email}</span>}
+            </div>
+          </div>
+
+          {/* House */}
+          <div className="form-row">
+            <label>House</label>
+            <EnumSelect enumObj={House} value={formData.house} onChange={handleHouseChange} isDisabled={readOnly} />
+          </div>
+
+          {/* Role */}
+          <div className="form-row">
+            <label>Role</label>
+            <EnumSelect enumObj={Role} value={formData.role} onChange={handleRoleChange} isDisabled={readOnly} />
+          </div>
+
+          {/* Pet */}
+          <div className="form-row">
+            <label>Pet</label>
+            <EnumSelect enumObj={Pet} value={formData.pet} onChange={handlePetChange} isDisabled={readOnly} />
+          </div>
+
+          {/* Gender */}
+          <div className="form-row">
+            <label>Gender</label>
+            <EnumSelect enumObj={Gender} value={formData.gender} onChange={handleGenderChange} isDisabled={readOnly} />
           </div>
         </div>
-
-        {/* Email */}
-        <div className="form-row">
-          <label>Email</label>
-          <div className="input-wrapper">
-            <input
-              type="email"
-              value={formData.role === Role.GHOST ? "It's a Ghost!" : formData.email}
-              onChange={handleChange("email")}
-              readOnly={readOnly || formData.role === Role.GHOST}
-              className={errors?.email ? "input-error" : ""}
-            />
-            {errors?.email && <span className="error-text">{errors.email}</span>}
-          </div>
-        </div>
-
-        {/* House */}
-        <div className="form-row">
-          <label>House</label>
-          <EnumSelect enumObj={House} value={formData.house} onChange={handleHouseChange} isDisabled={readOnly} />
-        </div>
-
-        {/* Role */}
-        <div className="form-row">
-          <label>Role</label>
-          <EnumSelect enumObj={Role} value={formData.role} onChange={handleRoleChange} isDisabled={readOnly} />
-        </div>
-
-        {/* Pet */}
-        <div className="form-row">
-          <label>Pet</label>
-          <EnumSelect enumObj={Pet} value={formData.pet} onChange={handlePetChange} isDisabled={readOnly} />
-        </div>
-
-        {/* Gender */}
-        <div className="form-row">
-          <label>Gender</label>
-          <EnumSelect enumObj={Gender} value={formData.gender} onChange={handleGenderChange} isDisabled={readOnly} />
-        </div>
-
         {/* Save button */}
         <div className='form-actions'>
           <button disabled={readOnly} className="save-button" onClick={handleOnClick}>

@@ -8,13 +8,12 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-
   padding: 0 24px;
-
-  background: var(--hp-bg-header, #3f000f);
   border-bottom: 1px solid var(--hp-border);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
 
+  background: var(--hp-bg-surface);
+  color: var(--hp-text-primary);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.25);
   z-index: 1000;
 }
 

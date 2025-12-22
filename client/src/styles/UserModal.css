@@ -17,6 +17,13 @@
   /* espacio reservado para la X */
 }
 
+.user-modal-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
 .user-modal .close-button {
   position: absolute;
   top: 16px;
@@ -30,6 +37,10 @@
 
 /* --- Profile picture --- */
 .user-modal .profile-pic {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
   border: 3px solid var(--hp-gold);
 }
 
@@ -96,6 +107,10 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 14px;
+}
+
+.user-modal .form-content{
+  margin-right: 50px;
 }
 
 .user-modal .form-row label {

@@ -9,7 +9,6 @@ import { hasCapacity } from './utils/permission';
 import { filterEnums, generateEnumOptions } from './utils/enum';
 import { userServices } from './services/userServices';
 import { FilterOption } from './types/filterOption';
-import { RoleSelector } from './components/RoleSelector';
 import UserFilter from './components/Filter';
 import Sorter from './components/Sorter';
 import FAB from './components/FAB';
@@ -76,7 +75,7 @@ function App() {
         mode: "error",
         title: "Delete failed",
         message: err.message,
-        onConfirm: () => {setConfirmModal(null); setShowConfirmModal(false);}
+        onConfirm: () => { setConfirmModal(null); setShowConfirmModal(false); }
       });
     }
 
@@ -142,54 +141,95 @@ function App() {
   useEffect(() => { setUsers(fetchedUsers) }, [fetchedUsers]);
 
   return (
-    <div className='bg-school'>
-      <div>
-        <div className="user-list-container">
-          <Header></Header>
-          <h2 className='title'>Users List</h2>
-          <div className="user-list-filter">
-            <div className="filters-container">
-              <input placeholder='Filter by Name' value={nameFilter} onChange={(e) => handleFilterNameChange(e)}></input>
-              {filtersEntries.map(([name, enumType]) => (
-                <UserFilter
-                  key={name}
-                  filterName={name}
-                  options={generateEnumOptions(enumType)}
-                  onSelectedOptionChange={values => handleFilterChange(name, values)}
+    <>
+      <Header />
+
+      <main className="app-content">
+        <div className='bg-school'>
+          <div className="user-list-container">
+            <h2 className="title">Users List</h2>
+
+            <div className="user-list-filter">
+              <div className="filters-container">
+                <input
+                  placeholder="Filter by Name"
+                  value={nameFilter}
+                  onChange={handleFilterNameChange}
                 />
-              ))}
-              <Sorter selectedSort={selectedSort} setSelectedSort={setSelectedSort} />
-              <button onClick={refetch}>Refresh Data</button>
 
-            </div>s
-          </div>
-          {loading && <p>Loading users...</p>}
-          {error && <div>
-            <p>Error: {error}</p>
-            <button onClick={refetch}>Reload</button>
-          </div>
-          }
-          {!loading && !error && users && (
-            <UserList users={filteredUsers!} canDelete={canDelete} onClick={handleUserClick} onDelete={(user: User) => handleOnDelete(user)}></UserList>
-          )}
-          <FAB
-            onClick={() => { setSelectedUser(null); setShowUserModal(true) }}
-            disabled={!canCreate}
-          />
-          {showUserModal && <UserModal serverError={serverError} readOnly={!canCreate} user={selectedUser} onClose={() => { setSelectedUser(null); setShowUserModal(false); }} onSubmit={handleSubmitUser} />}
-          {showConfirmModal && confirmModal && (
-            <ConfirmModal
-              mode={confirmModal.mode}
-              title={confirmModal.title}
-              message={confirmModal.message}
-              onConfirm={confirmModal.onConfirm}
-              onClose={() => setConfirmModal(null)}
+                {filtersEntries.map(([name, enumType]) => (
+                  <UserFilter
+                    key={name}
+                    filterName={name}
+                    options={generateEnumOptions(enumType)}
+                    onSelectedOptionChange={(values) =>
+                      handleFilterChange(name, values)
+                    }
+                  />
+                ))}
+
+                <Sorter
+                  selectedSort={selectedSort}
+                  setSelectedSort={setSelectedSort}
+                />
+
+                <button onClick={refetch}>Refresh Data</button>
+              </div>
+            </div>
+
+            {loading && <p>Loading users...</p>}
+
+            {error && (
+              <div>
+                <p>Error: {error}</p>
+                <button onClick={refetch}>Reload</button>
+              </div>
+            )}
+
+            {!loading && !error && users && (
+              <UserList
+                users={filteredUsers!}
+                canDelete={canDelete}
+                onClick={handleUserClick}
+                onDelete={handleOnDelete}
+              />
+            )}
+
+            <FAB
+              onClick={() => {
+                setSelectedUser(null);
+                setShowUserModal(true);
+              }}
+              disabled={!canCreate}
             />
-          )}
 
+            {showUserModal && (
+              <UserModal
+                serverError={serverError}
+                readOnly={!canCreate}
+                user={selectedUser}
+                onClose={() => {
+                  setSelectedUser(null);
+                  setShowUserModal(false);
+                }}
+                onSubmit={handleSubmitUser}
+              />
+            )}
+
+            {showConfirmModal && confirmModal && (
+              <ConfirmModal
+                mode={confirmModal.mode}
+                title={confirmModal.title}
+                message={confirmModal.message}
+                onConfirm={confirmModal.onConfirm}
+                onClose={() => setConfirmModal(null)}
+              />
+            )}
+          </div>
         </div>
-      </div>
-    </div>
+      </main>
+    </>
+
   )
 }
 
