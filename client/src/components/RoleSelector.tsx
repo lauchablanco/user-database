@@ -15,3 +15,5 @@ export function RoleSelector() {
    <EnumSelect enumObj={Role} onChange={handleChange} value={selectedOption!.value as Role}/>
   );
 }
+
+export default RoleSelector;

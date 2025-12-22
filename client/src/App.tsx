@@ -17,6 +17,7 @@ import UserModal from './components/UserModal';
 import { ConfirmModal } from './components/ConfirmModal';
 import "./styles/UserList.css"
 import { UserForm } from './types/permissions';
+import Header from './components/Header';
 
 
 function App() {
@@ -144,15 +145,7 @@ function App() {
     <div className='bg-school'>
       <div>
         <div className="user-list-container">
-          <div className='header-bar'>
-            <div className="header-left">
-              <img src="/hogwarts.png" alt="Hogwarts" className="hogwarts-logo" />
-            </div>
-            <div className='header-right'>
-              <h3 className='title'>Logged in as</h3>
-              <RoleSelector />
-            </div>
-          </div>
+          <Header></Header>
           <h2 className='title'>Users List</h2>
           <div className="user-list-filter">
             <div className="filters-container">
