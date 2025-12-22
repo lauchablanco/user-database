@@ -132,3 +132,14 @@
 .user-modal .react-datepicker-wrapper {
   width: 100%;
 }
+
+.user-modal .profile-pic.clickable {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.user-modal .profile-pic.clickable:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 0 4px rgba(201, 161, 74, 0.35);
+  opacity: 0.9;
+}
