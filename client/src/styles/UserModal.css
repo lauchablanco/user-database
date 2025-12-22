@@ -40,7 +40,8 @@
   background: var(--hp-bg-main);
   color: var(--hp-text-primary);
   border: 1px solid var(--hp-border);
-  height: 20px;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .user-modal input:focus,
@@ -110,5 +111,9 @@
 }
 
 .user-modal .form-row>*:last-child {
+  width: 100%;
+}
+
+.user-modal .react-datepicker-wrapper {
   width: 100%;
 }
