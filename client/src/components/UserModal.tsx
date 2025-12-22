@@ -119,11 +119,9 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSubmit, serverEr
   }, [serverError]);
 
   return (
-    <div className="modal-overlay" onClick={onClose}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-
+    <div className="modal-overlay user-modal-overlay" onClick={onClose}>
+      <div className="modal-content user-modal" onClick={(e) => e.stopPropagation()}>
         <button className="close-button" onClick={onClose}>✖</button>
-
         {/* Profile Picture: Invisible file input to change the image */}
         <input
           type="file"
@@ -212,9 +210,11 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSubmit, serverEr
         </div>
 
         {/* Save button */}
-        <button disabled={readOnly} className="save-button" onClick={handleOnClick}>
-          {user ? "Save Changes" : "Create User"}
-        </button>
+        <div className='form-actions'>
+          <button disabled={readOnly} className="save-button" onClick={handleOnClick}>
+            {user ? "Save Changes" : "Create User"}
+          </button>
+        </div>
 
         {serverError && (
           <div ref={serverErrorRef} className="server-error">

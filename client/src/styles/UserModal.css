@@ -1,161 +1,114 @@
-/* --- Overlay --- */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1150;
-  padding: 20px;
+/* --- Overlay específico --- */
+.user-modal-overlay {
+  background: var(--hp-bg-overlay);
 }
 
 /* --- Modal --- */
-.modal-content {
-  background: #ffffff;
-  width: 100%;
-  max-width: 420px;
-  max-height: 90vh;
-  overflow-y: auto;
-  border-radius: 14px;
-  padding: 28px;
+.user-modal {
+  background: var(--hp-bg-surface);
+  color: var(--hp-text-primary);
+  max-width: 460px;
+  border-radius: 16px;
+  border: 1px solid var(--hp-border);
+  box-shadow: var(--hp-glow-gold);
+  font-family: inherit;
   position: relative;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.18);
-  font-family: system-ui, sans-serif;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
+  padding-top: 56px;
+  /* espacio reservado para la X */
 }
 
-/* --- Close button --- */
-.close-button {
+.user-modal .close-button {
   position: absolute;
-  top: 14px;
-  right: 14px;
-  border: none;
-  background: transparent;
-  font-size: 20px;
-  cursor: pointer;
-  opacity: 0.6;
-  transition: 0.15s ease;
+  top: 16px;
+  right: 16px;
+  z-index: 10;
 }
 
-.server-error {
-  margin-top: 12px;
-  padding: 10px 12px;
-  background-color: rgba(211, 47, 47, 0.08);
-  color: #d32f2f;
-  border: 1px solid rgba(211, 47, 47, 0.3);
-  border-radius: 4px;
-  font-size: 0.9rem;
-}
-
-.close-button:hover {
-  opacity: 1;
+.user-modal .close-button:hover {
+  color: var(--hp-text-primary);
 }
 
 /* --- Profile picture --- */
-.profile-pic {
-  width: 110px;
-  height: 110px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin: 0 auto 8px auto;
-  border: 3px solid #ececec;
-  flex-shrink: 0;
-}
-
-/* --- Form spacing --- */
-p {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  margin: 0;
-}
-
-/* --- Labels --- */
-label {
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
+.user-modal .profile-pic {
+  border: 3px solid var(--hp-gold);
 }
 
 /* --- Inputs --- */
-input,
-.react-datepicker-wrapper input,
-.select-custom {
-  width: 100%;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: 1px solid #d5d5d5;
-  font-size: 14px;
-  transition: all 0.15s ease;
+.user-modal input,
+.user-modal .react-datepicker-wrapper input,
+.user-modal .select-custom {
+  background: var(--hp-bg-main);
+  color: var(--hp-text-primary);
+  border: 1px solid var(--hp-border);
+  height: 20px;
 }
 
-input:focus,
-.react-datepicker-wrapper input:focus,
-.select-custom:focus {
-  outline: none;
-  border-color: #6a5ae0;
-  background: white;
-  box-shadow: 0 0 0 3px rgba(106, 90, 224, 0.15);
+.user-modal input:focus,
+.user-modal .react-datepicker-wrapper input:focus,
+.user-modal .select-custom:focus {
+  border-color: var(--hp-gold);
+  box-shadow: 0 0 0 3px rgba(201, 161, 74, 0.25);
 }
 
-/* --- Disabled --- */
-input[readonly] {
-  background: #f1f1f1;
-  cursor: not-allowed;
+/* --- Readonly --- */
+.user-modal input[readonly] {
+  background: rgba(255, 255, 255, 0.06);
 }
 
 /* --- Save button --- */
 .save-button {
-  width: 100%;
-  margin-top: 10px;
-  padding: 12px;
-  background: #9b8406;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-size: 15px;
-  cursor: pointer;
-  transition: background 0.2s ease;
+  background: var(--hp-gold);
+  color: var(--hp-bg-main);
 }
 
 .save-button:hover:not(:disabled) {
-  background: #584ac5;
+  background: var(--hp-gold-hover);
 }
 
 .save-button:disabled {
-  background: #c6c6c6 !important;
-  cursor: not-allowed;
+  background: var(--hp-border) !important;
 }
 
-.form-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin: 6px 0;
-}
-
-.profile-pic.clickable {
-  cursor: pointer;
-}
-
-.profile-pic.clickable:hover {
-  opacity: 0.85;
-}
-
+/* --- Errors --- */
 .error-text {
-  color: #d32f2f;
-  font-size: 0.85rem;
-  line-height: 1.2;
+  color: var(--hp-danger);
 }
 
 .input-error {
-  border: 1px solid #d32f2f;
+  border-color: var(--hp-danger);
 }
 
 .input-error:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(211, 47, 47, 0.2);
+  box-shadow: 0 0 0 2px rgba(139, 47, 47, 0.35);
+}
+
+/* --- Server error --- */
+.server-error {
+  background-color: rgba(139, 47, 47, 0.12);
+  color: var(--hp-danger);
+  border: 1px solid rgba(139, 47, 47, 0.4);
+}
+
+.user-modal .form-row {
+  display: grid;
+  grid-template-columns: 110px 1fr;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.user-modal .form-row label {
+  font-size: 14px;
+  color: var(--hp-text-secondary);
+  text-align: right;
+}
+
+.user-modal .form-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.user-modal .form-row>*:last-child {
+  width: 100%;
 }
