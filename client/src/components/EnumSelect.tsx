@@ -1,5 +1,6 @@
 import Select from "react-select";
 import { generateEnumOptions } from "../utils/enum";
+import "../styles/EnumSelect.css";
 
 type EnumSelectProps<T extends string> = {
   enumObj: Record<string, T>;
@@ -24,6 +25,8 @@ export function EnumSelect<T extends string>({
       value={selected}
       isDisabled={isDisabled}
       onChange={(opt) => opt && onChange(opt.value as T)}
+      className="hp-select"
+      classNamePrefix="hp-select"
     />
   );
 }

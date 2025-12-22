@@ -1,0 +1,71 @@
+/* --- React Select base --- */
+.hp-select__control {
+  background: var(--hp-bg-main);
+  border: 1px solid var(--hp-border);
+  border-radius: 8px;
+  min-height: 38px;
+  box-shadow: none;
+}
+
+.hp-select__control--is-focused {
+  border-color: var(--hp-gold);
+  box-shadow: 0 0 0 3px rgba(201, 161, 74, 0.25);
+}
+
+/* --- Texto seleccionado --- */
+.hp-select__single-value {
+  color: #000;
+}
+
+/* --- Placeholder --- */
+.hp-select__placeholder {
+  color: #555;
+}
+
+/* --- Dropdown menu --- */
+.hp-select__menu {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* --- Opciones --- */
+.hp-select__option {
+  color: #000;
+  cursor: pointer;
+}
+
+.hp-select__option--is-focused {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+.hp-select__option--is-selected {
+  background: rgba(201, 161, 74, 0.25);
+  color: #000;
+}
+
+/* --- Disabled --- */
+.hp-select__control--is-disabled {
+  background: rgba(255, 255, 255, 0.06);
+  opacity: 0.6;
+}
+
+/* Texto del valor seleccionado */
+.hp-select__single-value {
+  color: #000 !important;
+}
+
+/* Texto que se escribe / placeholder activo */
+.hp-select__input-container {
+  color: #000 !important;
+}
+
+/* Placeholder */
+.hp-select__placeholder {
+  color: #555 !important;
+}
+
+/* Opciones del menú */
+.hp-select__option {
+  color: #000 !important;
+}
