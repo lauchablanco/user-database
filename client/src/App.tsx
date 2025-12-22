@@ -33,7 +33,7 @@ function App() {
     mode: "warning" | "error";
     title: string;
     message: string;
-    onConfirm?: () => void;
+    onConfirm: () => void;
   } | null>(null);
   const { role } = useAuth();
 

@@ -4,9 +4,7 @@ interface ConfirmModalProps {
   mode: "warning" | "error";
   title: string;
   message: string;
-  confirmLabel?: string;
-  cancelLabel?: string;
-  onConfirm?: () => void;
+  onConfirm: () => void;
   onClose: () => void;
 }
 
