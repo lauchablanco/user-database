@@ -82,10 +82,10 @@ const UserModal: React.FC<UserModalProps> = ({ user, onClose, onSubmit, serverEr
     const validationErrors = validateUserForm(formData);
 
     if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
       return;
     }
 
-    setErrors(validationErrors);
     await onSubmit(formData, selectedFile);
   };
 
