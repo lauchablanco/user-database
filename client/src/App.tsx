@@ -217,6 +217,7 @@ function App() {
                 onClose={() => {
                   setSelectedUser(null);
                   setShowUserModal(false);
+                  setServerError(null);
                 }}
                 onSubmit={handleSubmitUser}
               />
