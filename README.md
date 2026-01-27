@@ -35,7 +35,34 @@ git clone https://github.com/lauchablanco/user-database.git
 cd user-database
 ```
 
-### 2. Install dependencies
+## 2. Environment Variables
+
+Before running the project, create a `.env` file in the server root directory and add the following variable:
+
+```ini
+MONGO_URI_READONLY=mongodb+srv://readonly_user:readonly_user123@user-database.ar27t.mongodb.net/user_database?retryWrites=true&w=majority&appName=user-database
+```
+
+Create also a `.env` file in the client root directory and add the following variable:
+
+```ini
+VITE_API_KEY=mysecretkey123
+VITE_HOGWARTS_API_URL=http://localhost:5000/api
+VITE_HOGWARTS_IMAGES_URL=http://localhost:5000/uploads/profiles
+```
+
+Don't forget to build your proyects again if you change this files.
+
+```ini
+npm run build
+```
+
+You will also find a .env.example to see what you need.
+Make sure the .env file is not committed to the repository by adding it to your .gitignore file.
+
+---
+
+### 3. Install dependencies
 
 Navigate to each subproject and install dependencies:
 
@@ -68,35 +95,6 @@ cd ..
 
 ---
 
-## Environment Variables
-
-Before running the project, create a `.env` file in the server root directory and add the following variable:
-
-```ini
-MONGO_URI_READONLY=mongodb+srv://readonly_user:readonly_user123@user-database.ar27t.mongodb.net/user_database?retryWrites=true&w=majority&appName=user-database
-```
-
-Create also a `.env` file in the client root directory and add the following variable:
-
-```ini
-VITE_API_KEY=mysecretkey123
-VITE_HOGWARTS_API_URL=http://localhost:5000/api
-VITE_HOGWARTS_IMAGES_URL=http://localhost:5000/uploads/profiles
-```
-
-Don't forget to build your proyects again if you change this files.
-
-```ini
-npm run build
-```
-
-
-
-You will also find a .env.example to see what you need.
-Make sure the .env file is not committed to the repository by adding it to your .gitignore file.
-
----
-
 ## Running the Project
 
 ### 1. Start the Server
@@ -121,7 +119,7 @@ This will start the frontend on `http://localhost:5173` (or another port assigne
 
 ---
 
-## Database Setup
+## Database Setup (for devs only)
 
 If you need to reset and recreate the database, run:
 
