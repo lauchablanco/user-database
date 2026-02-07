@@ -1,7 +1,8 @@
 import React from "react";
+import App from "../App";
 
 const MagicFiles: React.FC = () => {
-    return <p>Comming soon!</p>;
+    return <App></App>;
 }
 
 export default MagicFiles;

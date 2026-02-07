@@ -17,6 +17,10 @@
   z-index: 1000;
 }
 
+.nav-link {
+  margin-left: 15px;
+}
+
 /* --- Left --- */
 .header-left {
   display: flex;
