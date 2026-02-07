@@ -8,11 +8,13 @@ import { BrowserRouter, Route, Routes } from 'react-router'
 import MagicFiles from './pages/MagicFiles.tsx'
 import SorteringHat from './pages/SorteringHat.tsx'
 import QuiddichForecast from './pages/QuiddichForecast.tsx'
+import Header from './components/Header.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <AuthProvider>
+        <Header />
         <Routes>
           <Route index element={<App />}></Route>
           <Route path='magic-files' element={<MagicFiles />}></Route>
