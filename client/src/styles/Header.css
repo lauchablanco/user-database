@@ -19,9 +19,24 @@
 
 .nav-link {
   margin-left: 15px;
+  text-decoration: none;    
+  color: #9b8406; 
+  font-weight: 500;
+  font-size: 14px;
+  transition: opacity 0.2s;
 }
 
-/* --- Left --- */
+.nav-link:hover {
+  opacity: 0.8;
+  color: #d4af37;
+  text-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
+}
+
+.nav-link.active {
+  font-weight: 700;
+  border-bottom: 2px solid #9b8406;
+}
+
 .header-left {
   display: flex;
   align-items: center;
@@ -32,7 +47,6 @@
   width: auto;
 }
 
-/* --- Right --- */
 .header-right {
   display: flex;
   align-items: center;
@@ -45,3 +59,4 @@
   font-weight: 600;
   color: var(--hp-gold);
 }
+

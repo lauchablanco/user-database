@@ -1,0 +1,39 @@
+.user-list-container {
+  max-width: 1280px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+.title {
+  margin: 16px 0 20px;
+  color: var(--hp-text-primary);
+  text-align: center;
+}
+
+.page-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 auto 20px;
+  width: fit-content;
+}
+
+.title-logo {
+  height: 70px;
+  width: auto;
+  display: block;
+}
+
+.user-list-filter {
+  margin-bottom: 20px;
+}
+
+.filters-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
